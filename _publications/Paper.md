@@ -1,9 +1,9 @@
 ---
-title: "Modelling of heat and mass transfer in clothing considering evaporation, condensation, and wet conduction with case study"
+title: "Evaluation of thermal properties and thermoregulatory impacts of lower back exosuit using thermal manikin"
 collection: publications
 permalink: /publication/2023-WetConduction
-date: 2023-01-15
-venue: 'Building and Environment'
-link: 'https://doi.org/10.1016/j.buildenv.2022.109786'
-citation: "Joshi, A., Psikuta, A., Annaheim, S., & Rossi, R. M. (2023). Modelling of heat and mass transfer in clothing considering evaporation, condensation, and wet conduction with case study. Building and Environment, 228, 109786."
+date: 2023-11-1
+venue: 'International Journal of Industrial Ergonomics'
+link: 'https://doi.org/10.1016/j.ergon.2023.103517'
+citation: "Joshi, A., Bartels, L., Viswanathan, S. H., Martinez, D. M., Sadeghi, K., Jaiswal, A. K., ... & Rykaczewski, K. (2023). Evaluation of thermal properties and thermoregulatory impacts of lower back exosuit using thermal manikin. International Journal of Industrial Ergonomics, 98, 103517."
 ---
