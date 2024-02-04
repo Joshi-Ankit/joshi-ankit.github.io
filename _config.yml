@@ -90,9 +90,10 @@ author:
   location         :
   employer         :
   pubmed           :
-  orcid            : "https://orcid.org/0000-0002-5399-1069"
-  googlescholar    : "https://scholar.google.com/citations?user=G84B1EQAAAAJ&hl=en&oi=ao"
   email            : "joshi_ankit@hotmail.com"
+  googlescholar    : "https://scholar.google.com/citations?user=G84B1EQAAAAJ&hl=en&oi=ao"
+  researchgate     : "https://www.researchgate.net/profile/Ankit-Joshi-6"
+  orcid            : "https://orcid.org/0000-0002-5399-1069"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
