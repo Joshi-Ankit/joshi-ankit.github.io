@@ -1,7 +1,7 @@
 ---
 title: "Evaluation of thermal properties and thermoregulatory impacts of lower back exosuit using thermal manikin"
 collection: publications
-permalink: /publication/2023-WetConduction
+permalink: /publication/2023-E
 date: 2023-11-1
 venue: 'International Journal of Industrial Ergonomics'
 link: 'https://doi.org/10.1016/j.ergon.2023.103517'
