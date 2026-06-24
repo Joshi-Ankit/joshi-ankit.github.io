@@ -57,7 +57,7 @@ yandex_site_verification :
 
 # Social Sharing
 mastodon:
-  username               : "fosstodon.org/@jayrobw"
+  username               :
 twitter:
   username               : 
 facebook:
@@ -75,11 +75,11 @@ social:
 
 # Analytics
 analytics:
-  provider               : "goatcounter" # false (default), "google", "google-universal", "custom", "goatcounter"
+  provider               : false # false (default), "google", "google-universal", "custom", "goatcounter"
   google:
-    tracking_id          : 
+    tracking_id          :
   goatcounter:
-    code		 : jayrobwilliams
+    code                 :
 
 
 # Site Author
@@ -87,14 +87,13 @@ author:
   name             : "Ankit Joshi"
   avatar           : "Ankit.png"
   bio              : "Research Scientist"
-  location         :
-  employer         :
+  location         : "Tempe, AZ"
+  employer         : "Arizona State University"
   pubmed           :
   email            : "joshi_ankit@hotmail.com"
   googlescholar    : "https://scholar.google.com/citations?user=G84B1EQAAAAJ&hl=en&oi=ao"
   researchgate     : "https://www.researchgate.net/profile/Ankit-Joshi-6"
   orcid            : "https://orcid.org/0000-0002-5399-1069"
-  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
   codepen          :
@@ -261,7 +260,7 @@ sass:
 permalink: /:categories/:title/
 # paginate: 5 # amount of posts to show
 # paginate_path: /page:num/
-timezone: America/Chicago # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: America/Phoenix # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins

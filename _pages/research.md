@@ -3,33 +3,23 @@ layout: archive
 title: "Research"
 permalink: /research/
 author_profile: true
-header:
-  og_image: "research/ecdf.png"
 ---
 
-My academic research falls into two main areas: understanding the influence of
-geography on actor behavior before, during, and after civil conflict, and
-developing new tools to improve the study of institutions (both formal and
-informal) in peace and conflict. One strand of research in this first area
-explores how the territories that ethnic groups inhabit shape rebel group
-formation and condition their relationship with the state. My interest in
-geography also informs projects on active conflicts including the targeting of
-UN peacekeepers by insurgent groups, civilian victimization after rebel
-territorial conquest, and communal violence in fragile settings.
+My research spans two interconnected areas at the intersection of thermal science, human physiology, and engineering.
 
-My other main research agenda uses advanced methods to develop new measures of
-institutions. One project uses Bayesian item response theory to measure the
-strength of peace agreements as a latent variable and free researchers from
-post-treatment bias caused by using the duration of agreements as a proxy for
-their strength. In others, I apply unsupervised learning techniques to over a
-billion observations of product-level international trade data to measure
-economic interdependence and illicit economic exchange.
+The first area focuses on **human thermoregulation and heat stress**. I develop and refine computational models that simulate heat and mass transfer from the human body under extreme thermal environments — both hot and cold. This work includes advancing thermoregulatory models that account for individual variability in body type, metabolic rate, and physiological response. A current NSF-funded project ([Award #2152468](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2152468)) uses advanced mobile biometeorological stations and thermal manikins to measure realistic heat exposure in field conditions, with a focus on mitigating health risks from extreme heat across diverse populations.
 
-In a new avenue of research, I leverage social media data to explore
-participation in extremist movements across multiple contexts, gaining insight
-into the early stages of radicalization.
+The second area investigates the **role of clothing and personal protective equipment in heat transfer**. I study how garments, gloves, and wearable devices (including exosuits) affect the thermal microclimate at the skin surface, using thermal manikins, 3D scanning methods, and computational simulation. This research has direct applications in occupational safety, athletic performance, and military/first-responder gear design.
 
-<nbsp>
+&nbsp;
+
+{% include base_path %}
+
+{% assign ordered_pages = site.research | sort:"order_number" %}
+
+{% for post in ordered_pages %}
+  {% include archive-single.html type="grid" %}
+{% endfor %}
 
 {% include base_path %}
 
