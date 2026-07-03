@@ -24,9 +24,7 @@
       --accent-lt: #2563B0;
       --cold:      #1D6FA4;
       --warm:      #B8432F;
-      --nav-hover: #EEF2F9;
-      --nav-active:#E4ECF8;
-      --sidebar-w: 260px;
+      --sidebar-w: 240px;
       --r: 7px;
     }
 
@@ -94,39 +92,41 @@
       letter-spacing: -.015em;
       color: var(--text-1);
       line-height: 1.2;
-      margin-bottom: 0.25rem;
-    }
-
-    /* Title badge */
-    .s-title {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.35rem;
-    }
-
-    /* Org — was too light/small; now proper size + weight */
-    .s-org {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-2);
-      line-height: 1.45;
       margin-bottom: 0.3rem;
     }
 
-    /* Location — was too faint; now solid */
+    /* Title — mono caps in accent */
+    .s-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Org — mono, slightly muted accent, readable size */
+    .s-org {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.74rem;
+      letter-spacing: .03em;
+      color: var(--text-2);
+      line-height: 1.55;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Location — icon accent, text readable */
     .s-location {
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.83rem;
-      font-weight: 400;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: .03em;
       color: var(--text-2);
       margin-bottom: 1.4rem;
     }
-    .s-location i { color: var(--accent); font-size: .76rem; }
+    .s-location i { color: var(--accent); font-size: .72rem; }
 
     /* Divider */
     .s-div { height:1px; background:var(--hairline); margin-bottom:1.2rem; }
@@ -145,96 +145,66 @@
     .s-links a:hover .ico { color:var(--accent); }
 
     /* ═══════════════════════════════════════════
-       SIDEBAR NAVIGATION TREE
+       HORIZONTAL NAV (top of main)
     ═══════════════════════════════════════════ */
-    .nav-tree { list-style:none; }
+    .nav-primary {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 0;
+    }
 
-    /* Parent group (e.g., "Ankit Joshi") */
-    .nav-group-btn {
+    .nav-primary-btn {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      width: 100%;
+      gap: .3rem;
       background: none;
       border: none;
-      padding: .48rem .55rem;
-      border-radius: 5px;
+      border-bottom: 2px solid transparent;
+      padding: .7rem 1.05rem .62rem;
+      margin-bottom: -1px;
       cursor: pointer;
-      font-family: 'IBM Plex Sans', system-ui, sans-serif;
-      font-size: .84rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .67rem;
       font-weight: 500;
-      color: var(--text-1);
-      text-align: left;
-      transition: background .15s;
-      margin-bottom: .1rem;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: #8490A0;
+      white-space: nowrap;
+      transition: color .15s, border-color .15s;
     }
-    .nav-group-btn:hover { background: var(--nav-hover); }
-    .nav-group-btn .chevron {
-      font-size: .58rem;
-      color: var(--text-3);
-      transition: transform .2s;
-    }
-    .nav-group-btn.open .chevron { transform: rotate(90deg); }
+    .nav-primary-btn:hover { color: #3D4755; }
+    .nav-primary-btn.active { color: #1B4A86; border-bottom-color: #1B4A86; }
+    .nav-primary-btn .chevron { font-size: .52rem; opacity: .6; }
 
-    /* Sub-items */
-    .nav-sub {
-      list-style: none;
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height .25s ease;
-      margin-left: .5rem;
+    /* Sub-tab row — only visible when parent group is active */
+    .nav-sub-row {
+      display: none;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--hairline);
+      background: #F0F3F9;
+      margin-bottom: 0;
+      padding: 0 .2rem;
     }
-    .nav-sub.open { max-height: 200px; }
+    .nav-sub-row.visible { display: flex; }
 
     .nav-sub-btn {
-      display: flex;
-      align-items: center;
-      gap: .45rem;
-      width: 100%;
       background: none;
       border: none;
-      padding: .38rem .5rem .38rem 1rem;
-      border-radius: 5px;
+      border-bottom: 2px solid transparent;
+      padding: .5rem .9rem .44rem;
+      margin-bottom: -1px;
       cursor: pointer;
-      font-family: 'IBM Plex Sans', system-ui, sans-serif;
-      font-size: .8rem;
-      color: var(--text-2);
-      text-align: left;
-      transition: background .15s, color .15s;
-      margin-bottom: .05rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .63rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #7A8799;
+      white-space: nowrap;
+      transition: color .15s, border-color .15s;
     }
-    .nav-sub-btn::before {
-      content: '';
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--hairline);
-      flex-shrink: 0;
-      transition: background .15s;
-    }
-    .nav-sub-btn:hover { background:var(--nav-hover); color:var(--text-1); }
-    .nav-sub-btn:hover::before { background: var(--accent); }
-    .nav-sub-btn.active { background:var(--nav-active); color:var(--accent); font-weight:500; }
-    .nav-sub-btn.active::before { background: var(--accent); }
-
-    /* Top-level standalone items */
-    .nav-item-btn {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      background: none;
-      border: none;
-      padding: .48rem .55rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-family: 'IBM Plex Sans', system-ui, sans-serif;
-      font-size: .84rem;
-      color: var(--text-2);
-      text-align: left;
-      transition: background .15s, color .15s;
-      margin-bottom: .05rem;
-    }
-    .nav-item-btn:hover { background:var(--nav-hover); color:var(--text-1); }
-    .nav-item-btn.active { background:var(--nav-active); color:var(--accent); font-weight:500; }
+    .nav-sub-btn:hover { color: #3D4755; }
+    .nav-sub-btn.active { color: #1B4A86; border-bottom-color: #1B4A86; }
 
     /* ═══════════════════════════════════════════
        MAIN
@@ -249,7 +219,7 @@
     .prose { max-width: 68ch; }
 
     /* ── Panels ───── */
-    .panel { display:none; animation: fadeUp .28s ease both; }
+    .panel { display:none; animation: fadeUp .28s ease both; padding-top: 2.25rem; }
     .panel.active { display:block; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:none} }
     @media (prefers-reduced-motion:reduce) { .panel { animation:none; } }
@@ -332,16 +302,17 @@
       color:var(--text-1); line-height:1.3; margin-bottom:.12rem;
     }
 
-    /* Org/institution — was too small/faint */
+    /* Org/institution — mono, accent-tinted, readable */
     .tl-inst {
-      font-size: .82rem;
-      font-weight: 400;
-      color: var(--text-2);
-      line-height: 1.55;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .025em;
+      color: var(--accent);
+      line-height: 1.65;
       margin-bottom: .7rem;
     }
-    .tl-inst a { color:var(--text-2); }
-    .tl-inst a:hover { color:var(--accent); text-decoration:none; }
+    .tl-inst a { color: var(--accent); }
+    .tl-inst a:hover { color: var(--accent-lt); text-decoration:none; }
 
     .tl-desc { font-size:.9rem; color:var(--text-2); max-width:64ch; line-height:1.75; }
 
@@ -614,34 +585,6 @@
       </a></li>
     </ul>
 
-    <div class="s-div"></div>
-
-    <!-- Navigation tree -->
-    <nav aria-label="Main navigation">
-      <ul class="nav-tree">
-
-        <!-- Ankit Joshi group -->
-        <li>
-          <button class="nav-group-btn open" data-group="profile" aria-expanded="true">
-            <span>Ankit Joshi</span>
-            <i class="fa-solid fa-chevron-right chevron"></i>
-          </button>
-          <ul class="nav-sub open" id="sub-profile">
-            <li><button class="nav-sub-btn active" data-panel="about">About</button></li>
-            <li><button class="nav-sub-btn" data-panel="experience">Experience</button></li>
-            <li><button class="nav-sub-btn" data-panel="education">Education</button></li>
-          </ul>
-        </li>
-
-        <li><button class="nav-item-btn" data-panel="research">Research</button></li>
-        <li><button class="nav-item-btn" data-panel="publications">Publications</button></li>
-        <li><button class="nav-item-btn" data-panel="conference">Conference</button></li>
-        <li><button class="nav-item-btn" data-panel="cv">CV</button></li>
-        <li><button class="nav-item-btn" data-panel="news">News</button></li>
-
-      </ul>
-    </nav>
-
   </aside>
 
 
@@ -649,6 +592,27 @@
        MAIN CONTENT
   ═══════════════════════════════════════ -->
   <main id="main">
+
+    <!-- Primary nav row -->
+    <nav aria-label="Main navigation">
+      <div class="nav-primary">
+        <button class="nav-primary-btn active" data-group="profile" data-default-sub="about">
+          Ankit Joshi <i class="fa-solid fa-chevron-down chevron"></i>
+        </button>
+        <button class="nav-primary-btn" data-panel="research">Research</button>
+        <button class="nav-primary-btn" data-panel="publications">Publications</button>
+        <button class="nav-primary-btn" data-panel="conference">Conference</button>
+        <button class="nav-primary-btn" data-panel="cv">CV</button>
+        <button class="nav-primary-btn" data-panel="news">News</button>
+      </div>
+
+      <!-- Sub-tab row (visible only when "Ankit Joshi" group active) -->
+      <div class="nav-sub-row visible" id="sub-profile">
+        <button class="nav-sub-btn active" data-panel="about">About</button>
+        <button class="nav-sub-btn" data-panel="experience">Experience</button>
+        <button class="nav-sub-btn" data-panel="education">Education</button>
+      </div>
+    </nav>
 
     <!-- ─── ABOUT ──────────────────────────── -->
     <div id="about" class="panel active" role="main">
@@ -1035,43 +999,51 @@
 <script>
 /* ── Navigation ────────────────────────────── */
 (function () {
-  var allPanels   = document.querySelectorAll('.panel');
-  var subBtns     = document.querySelectorAll('.nav-sub-btn');
-  var itemBtns    = document.querySelectorAll('.nav-item-btn');
-  var groupBtns   = document.querySelectorAll('.nav-group-btn');
-  var mapInited   = false;
+  var allPanels  = document.querySelectorAll('.panel');
+  var primaryBtns= document.querySelectorAll('.nav-primary-btn');
+  var subBtns    = document.querySelectorAll('.nav-sub-btn');
+  var subRow     = document.getElementById('sub-profile');
+  var mapInited  = false;
+
+  function clearAll() {
+    allPanels.forEach(function(p){ p.classList.remove('active'); });
+    primaryBtns.forEach(function(b){ b.classList.remove('active'); });
+    subBtns.forEach(function(b){ b.classList.remove('active'); });
+  }
 
   function showPanel(id) {
-    allPanels.forEach(function(p){ p.classList.remove('active'); });
-    subBtns.forEach(function(b){ b.classList.remove('active'); });
-    itemBtns.forEach(function(b){ b.classList.remove('active'); });
-    var panel = document.getElementById(id);
-    if (panel) { panel.classList.add('active'); }
+    var el = document.getElementById(id);
+    if (el) { el.classList.add('active'); }
     if (id === 'cv' && !mapInited) { initMap(); mapInited = true; }
   }
 
-  subBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      showPanel(this.dataset.panel);
+  /* Primary buttons */
+  primaryBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      clearAll();
       this.classList.add('active');
+
+      if (this.dataset.group) {
+        /* "Ankit Joshi" group — show sub-row, activate default sub */
+        subRow.classList.add('visible');
+        var defaultSub = this.dataset.defaultSub || 'about';
+        showPanel(defaultSub);
+        subBtns.forEach(function(s){ if(s.dataset.panel===defaultSub) s.classList.add('active'); });
+      } else {
+        /* standalone tab */
+        subRow.classList.remove('visible');
+        showPanel(this.dataset.panel);
+      }
     }.bind(btn));
   });
 
-  itemBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      showPanel(this.dataset.panel);
+  /* Sub-buttons (About / Experience / Education) */
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      allPanels.forEach(function(p){ p.classList.remove('active'); });
+      subBtns.forEach(function(b){ b.classList.remove('active'); });
       this.classList.add('active');
-    }.bind(btn));
-  });
-
-  /* Collapsible groups */
-  groupBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var sub = document.getElementById('sub-' + this.dataset.group);
-      var isOpen = sub.classList.contains('open');
-      sub.classList.toggle('open');
-      this.classList.toggle('open', !isOpen);
-      this.setAttribute('aria-expanded', String(!isOpen));
+      showPanel(this.dataset.panel);
     }.bind(btn));
   });
 }());
