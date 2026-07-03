@@ -24,7 +24,7 @@
       --accent-lt: #2563B0;
       --cold:      #1D6FA4;
       --warm:      #B8432F;
-      --sidebar-w: 240px;
+      --sidebar-w: 220px;
       --r: 7px;
     }
 
@@ -48,7 +48,7 @@
     .page {
       display: flex;
       align-items: flex-start;
-      max-width: 1140px;
+      max-width: 1320px;
       margin: 0 auto;
       padding: 0 1.75rem;
       gap: 0;
@@ -64,7 +64,7 @@
       top: 0;
       height: 100vh;
       overflow-y: auto;
-      padding: 2.5rem 1.5rem 3rem 0;
+      padding: 1.75rem 1.25rem 2rem 0;
       border-right: 1px solid var(--hairline);
       display: flex;
       flex-direction: column;
@@ -75,7 +75,7 @@
 
     /* Avatar */
     .avatar {
-      width: 128px; height: 128px;
+      width: 100px; height: 100px;
       border-radius: 50%;
       object-fit: cover; object-position: top center;
       border: 3px solid var(--surface);
@@ -108,8 +108,8 @@
     /* Org — mono, slightly muted accent, readable size */
     .s-org {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.74rem;
-      letter-spacing: .03em;
+      font-size: 0.63rem;
+      letter-spacing: 0;
       color: var(--text-2);
       line-height: 1.55;
       margin-bottom: 0.35rem;
@@ -161,7 +161,7 @@
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
-      padding: .7rem 1.05rem .62rem;
+      padding: .65rem .9rem .58rem;
       margin-bottom: -1px;
       cursor: pointer;
       font-family: 'IBM Plex Mono', monospace;
@@ -212,7 +212,8 @@
     main {
       flex: 1;
       min-width: 0;
-      padding: 2.75rem 0 5rem 3rem;
+      max-width: 900px;
+      padding: 2.75rem 2rem 5rem 2.5rem;
     }
 
     /* all prose capped at same width */
@@ -284,7 +285,7 @@
       font-family:'IBM Plex Mono',monospace;
       font-size:.66rem; letter-spacing:.04em;
       color:var(--text-3); text-align:right;
-      padding-top:.2rem; line-height:1.55;
+      padding-top:.2rem; padding-right:.6rem; line-height:1.55;
     }
 
     .tl-body, .edu-body { position:relative; }
@@ -346,17 +347,38 @@
     ═══════════════════════════════════════════ */
     .research-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 1.1rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem;
     }
     .r-card {
       background: var(--surface);
       border: 1px solid var(--hairline);
       border-radius: var(--r);
-      padding: 1.4rem 1.5rem;
+      padding: 1.4rem 1.5rem 0;
       transition: box-shadow .2s, transform .2s;
+      position: relative;
+      overflow: hidden;
+      max-height: 480px;
     }
+    .r-card.r-expanded { max-height: none; }
     .r-card:hover { box-shadow:0 6px 24px rgba(0,0,0,.09); transform:translateY(-2px); }
+    .r-card-fade {
+      position: absolute; bottom: 2rem; left: 0; right: 0;
+      height: 64px;
+      background: linear-gradient(to bottom, transparent, var(--surface));
+      pointer-events: none;
+    }
+    .r-card.r-expanded .r-card-fade { display: none; }
+    .r-card-toggle {
+      display: block; width: 100%; border: none; background: var(--surface);
+      border-top: 1px solid var(--hairline);
+      padding: .45rem 0 .6rem;
+      font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--accent-lt); cursor: pointer; text-align: center;
+      position: sticky; bottom: 0;
+    }
+    .r-card-toggle:hover { color: var(--accent); }
     .r-icon {
       width:36px; height:36px; border-radius:8px;
       background:#EEF3FB;
@@ -365,6 +387,42 @@
     }
     .r-title { font-size:.93rem; font-weight:500; color:var(--text-1); margin-bottom:.45rem; line-height:1.35; }
     .r-desc  { font-size:.84rem; color:var(--text-2); line-height:1.72; }
+
+    /* Research card — figure */
+    .r-fig { width:100%; border-radius:5px; margin:.9rem 0 .75rem; display:block; border:1px solid var(--hairline); }
+
+    /* Research card — related publications (collapsible) */
+    .r-pubs { margin-top:1rem; border-top:1px solid var(--hairline); padding-top:.8rem; }
+    .r-pubs-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      background: none; border: none; padding: 0; margin: 0;
+      width: 100%; cursor: pointer; text-align: left;
+    }
+    .r-pubs-label {
+      font-family:'IBM Plex Mono',monospace; font-size:.6rem; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--accent-lt);
+    }
+    .r-pubs-chevron {
+      font-size:.6rem; color:var(--text-3);
+      transition: transform .22s ease;
+    }
+    .r-pubs-toggle.open .r-pubs-chevron { transform: rotate(180deg); }
+    .r-pubs-body { display:none; margin-top:.65rem; }
+    .r-pubs-body.open { display:block; }
+    .r-pub-item { margin-bottom:.7rem; }
+    .r-pub-item:last-child { margin-bottom:0; }
+    .r-pub-title { font-size:.82rem; font-weight:500; color:var(--text-1); line-height:1.4; margin-bottom:.15rem; }
+    .r-pub-title a { color:var(--text-1); }
+    .r-pub-title a:hover { color:var(--accent); text-decoration:none; }
+    .r-pub-meta { font-size:.76rem; color:var(--text-3); margin-bottom:.25rem; }
+    .r-pub-prep { font-size:.72rem; font-family:'IBM Plex Mono',monospace; color:var(--warm); letter-spacing:.04em; }
+    .r-scholar-link { margin-top:.9rem; padding-top:.7rem; border-top:1px solid var(--hairline); text-align:center; }
+    .r-scholar-link a { font-size:.78rem; color:var(--accent-lt); text-decoration:none; }
+    .r-scholar-link a:hover { color:var(--accent); }
+    .r-desc-list { font-size:.84rem; color:var(--text-2); line-height:1.72; margin:.45rem 0 0 1.1rem; }
+    .r-desc-list li { margin-bottom:.2rem; }
+    .r-desc-list strong { color:var(--text-1); font-weight:500; }
+    .r-pub-links { display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.3rem; }
 
     /* ═══════════════════════════════════════════
        PUBLICATIONS
@@ -427,7 +485,7 @@
     .conf-item:last-child { border-bottom:none; }
     .conf-year { font-family:'IBM Plex Mono',monospace; font-size:.66rem; color:var(--text-3); line-height:1.55; text-align:right; padding-top:.15rem; }
     .conf-title { font-size:.93rem; font-weight:500; color:var(--text-1); margin-bottom:.18rem; line-height:1.4; }
-    .conf-venue { font-size:.83rem; color:var(--text-2); line-height:1.5; }
+    .conf-venue { font-size:.83rem; color:var(--accent-lt); line-height:1.5; }
     .conf-type {
       display:inline-block; font-family:'IBM Plex Mono',monospace;
       font-size:.58rem; letter-spacing:.06em; text-transform:uppercase;
@@ -516,6 +574,53 @@
     .news-date { font-family:'IBM Plex Mono',monospace; font-size:.65rem; color:var(--text-3); line-height:1.55; text-align:right; padding-top:.15rem; }
     .news-title { font-size:.93rem; font-weight:500; color:var(--text-1); margin-bottom:.2rem; line-height:1.4; }
     .news-body { font-size:.85rem; color:var(--text-2); max-width:58ch; line-height:1.7; }
+    .news-img { width:100%; max-width:480px; border-radius:6px; margin:.5rem 0 .65rem; display:block; border:1px solid var(--hairline); }
+
+    /* ═══════════════════════════════════════════
+       PRESS / IN THE MEDIA
+    ═══════════════════════════════════════════ */
+    .press-intro { font-size:.88rem; color:var(--text-2); line-height:1.75; margin-bottom:1.8rem; max-width:62ch; }
+    .press-section-head {
+      font-family:'IBM Plex Mono',monospace; font-size:.6rem; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--text-3);
+      border-bottom:1px solid var(--hairline); padding-bottom:.45rem;
+      margin:2rem 0 .9rem;
+    }
+    .press-section-head:first-of-type { margin-top:0; }
+    .press-item {
+      display:grid; grid-template-columns:5.5rem 1fr auto;
+      gap:0 1.4rem; padding:.75rem 0;
+      border-bottom:1px solid var(--hairline);
+      align-items:center;
+    }
+    .press-item:last-child { border-bottom:none; }
+    .press-date { font-family:'IBM Plex Mono',monospace; font-size:.62rem; color:var(--text-3); text-align:right; }
+    .press-outlet { font-size:.92rem; font-weight:500; color:var(--text-1); line-height:1.35; }
+    .press-meta { display:flex; align-items:center; gap:.5rem; margin-top:.2rem; flex-wrap:wrap; }
+    .press-country { font-size:.76rem; color:var(--text-3); }
+    .press-badge {
+      font-size:.58rem; font-family:'IBM Plex Mono',monospace; letter-spacing:.06em;
+      text-transform:uppercase; padding:.1rem .38rem; border-radius:3px; line-height:1.5;
+    }
+    .badge-name  { background:rgba(27,74,134,.09); color:var(--accent); }
+    .badge-photo { background:rgba(161,103,0,.1);  color:#8a6000; }
+    .badge-video { background:rgba(180,35,35,.09); color:#b42323; }
+    .badge-cited { background:rgba(100,100,110,.09); color:var(--text-3); }
+    .press-link {
+      font-family:'IBM Plex Mono',monospace; font-size:.59rem; letter-spacing:.03em;
+      color:var(--accent-lt); text-decoration:none;
+      padding:.22rem .55rem; border:1px solid var(--hairline); border-radius:4px;
+      white-space:nowrap; transition:background .15s, color .15s, border-color .15s;
+    }
+    .press-link:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .press-count {
+      font-family:'IBM Plex Mono',monospace; font-size:.62rem; color:var(--text-3);
+      margin-bottom:1.6rem;
+    }
+    .press-count span { color:var(--accent); font-weight:600; }
+    .press-outlets { list-style:none; padding:0; margin:0; margin-top:.7rem; display:flex; flex-direction:column; gap:.55rem; }
+    .press-outlet-row { display:flex; align-items:center; gap:.55rem; flex-wrap:wrap; }
+    .press-outlet-name { font-size:.88rem; font-weight:500; color:var(--text-1); }
 
     /* ═══════════════════════════════════════════
        FOOTER
@@ -571,7 +676,7 @@
 
     <h1 class="s-name">Ankit Joshi</h1>
     <p class="s-title">Research Scientist</p>
-    <p class="s-org">HJF / BHSAI · U.S. Army MRDC</p>
+    <p class="s-org">Computational Thermal Physiology</p>
     <p class="s-location">
       <i class="fa-solid fa-location-dot"></i>
       Maryland, USA
@@ -615,10 +720,11 @@
           Ankit Joshi <i class="fa-solid fa-chevron-down chevron"></i>
         </button>
         <button class="nav-primary-btn" data-panel="research">Research</button>
-        <button class="nav-primary-btn" data-panel="publications">Publications</button>
+        <button class="nav-primary-btn" data-panel="publications">Papers</button>
         <button class="nav-primary-btn" data-panel="conference">Conference</button>
         <button class="nav-primary-btn" data-panel="cv">CV</button>
-        <button class="nav-primary-btn" data-panel="news">News</button>
+        <button class="nav-primary-btn" data-panel="news">Updates</button>
+        <button class="nav-primary-btn" data-panel="press">Press</button>
       </div>
 
       <!-- Sub-tab row (visible only when "Ankit Joshi" group active) -->
@@ -748,40 +854,250 @@
         <div class="r-card">
           <div class="r-icon"><i class="fa-solid fa-person-rays"></i></div>
           <h3 class="r-title">Individualized Thermoregulation Modeling</h3>
-          <p class="r-desc">Building physiological models that account for individual characteristics — extending beyond the standard adult to the elderly, fetus, and diverse occupational populations. Models range from high-fidelity 3D finite-element representations to fast reduced-order surrogates for real-time use.</p>
+          <img src="images/research/thermoreg-models.png" alt="Progression of thermoregulation model complexity from 1-cylinder to 3D finite-element representation" class="r-fig">
+          <p class="r-desc">This research develops individualized thermoregulation models that move beyond the standard adult to capture heat strain across a broad range of human physiology, including military and defense personnel operating in extreme thermal environments and occupational workers in high-heat industrial settings, to competitive athletes of diverse body morphologies, elderly individuals with diminished thermoregulatory capacity, people experiencing homelessness and those with substance use that elevates heat strain risk, and the near-term fetus during maternal heat exposure. Model complexity spans high-fidelity 3D finite-element representations resolving organ-level heat transfer to reduced-order surrogates validated against human-trial data for real-time field deployment.</p>
+          <div class="r-pubs">
+            <button class="r-pubs-toggle" onclick="togglePubs(this)" aria-expanded="false">
+              <span class="r-pubs-label">Key Publications</span>
+              <i class="fa-solid fa-chevron-down r-pubs-chevron"></i>
+            </button>
+            <div class="r-pubs-body">
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.buildenv.2021.108506" target="_blank" rel="noopener">A three-dimensional thermoregulatory model for predicting human thermophysiological responses in various thermal environments</a></p>
+              <p class="r-pub-meta">Joshi, A., Wang, F., Kang, Z., Yang, B., Zhao, D. · Building and Environment, 207, 108506 · 2022</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.buildenv.2021.108506" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('A three-dimensional thermoregulatory model for predicting human thermophysiological responses in various thermal environments','Joshi, A., Wang, F., Kang, Z., Yang, B., Zhao, D.','Building and Environment, 207, 108506 (2022)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.jtherbio.2024.104035" target="_blank" rel="noopener">Comparative analysis of thermoregulation models to assess heat strain in moderate to extreme heat</a></p>
+              <p class="r-pub-meta">Joshi, A., Twidwell, B., Park, M., Rykaczewski, K. · Journal of Thermal Biology, 127, 104035 · 2025</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.jtherbio.2024.104035" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Comparative analysis of thermoregulation models to assess heat strain in moderate to extreme heat','Joshi, A., Twidwell, B., Park, M., Rykaczewski, K.','Journal of Thermal Biology, 127, 104035 (2025)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1007/s42978-023-00256-z" target="_blank" rel="noopener">Impact of reflective roadways on simulated heat strain at the Tokyo, Paris and Los Angeles Olympics</a></p>
+              <p class="r-pub-meta">Vanos, J. K., Joshi, A., Guzman-Echavarria, G., Rykaczewski, K., Hosokawa, Y. · Journal of Science in Sport and Exercise, 6(3), 288–302 · 2024</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1007/s42978-023-00256-z" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Impact of reflective roadways on simulated heat strain at the Tokyo, Paris and Los Angeles Olympics','Vanos, J. K., Joshi, A., Guzman-Echavarria, G., Rykaczewski, K., Hosokawa, Y.','Journal of Science in Sport and Exercise, 6(3), 288-302 (2024)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1007/s00484-025-02851-7" target="_blank" rel="noopener">Impact of tent shade on heat exposures and simulated heat strain for people experiencing homelessness</a></p>
+              <p class="r-pub-meta">Karanja, J., Vanos, J., Joshi, A., Penner, S., Guzman, G. E., Connor, D. S., et al. · International Journal of Biometeorology, 69(11), 2841–2854 · 2025</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1007/s00484-025-02851-7" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Impact of tent shade on heat exposures and simulated heat strain for people experiencing homelessness','Karanja, J., Vanos, J., Joshi, A., Penner, S., Guzman, G. E., Connor, D. S., et al.','International Journal of Biometeorology, 69(11), 2841-2854 (2025)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title">Modeling steady-state thermoregulation of a near-term human fetus</p>
+              <p class="r-pub-meta">Joshi, A., et al.</p>
+              <p class="r-pub-prep">In Preparation</p>
+            </div>
+
+          </div>
+            </div>
+        </div>
+
+        <div class="r-card">
+          <div class="r-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+          <h3 class="r-title">Heat Strain Measurement &amp; Early Warning</h3>
+          <img src="images/research/Measurement of heat strain.png" alt="Measurement of heat strain instrumentation and field deployment" class="r-fig">
+          <p class="r-desc">Translating environmental conditions into physiological risk requires measuring what the human body actually experiences, not just ambient air temperature. This work develops and validates field-deployable platforms that simultaneously resolve mean radiant temperature, turbulent airflow, temperature, and humidity, producing high-fidelity boundary conditions for person-specific, real-time heat strain estimation. Measurements span compact two-cylinder radiometer-anemometers for rapid field deployment to controlled experiments with ANDI, a full anatomical advanced thermal manikin, characterizing human heat exchange under realistic outdoor conditions.</p>
+          <div class="r-pubs">
+            <button class="r-pubs-toggle" onclick="togglePubs(this)" aria-expanded="false">
+              <span class="r-pubs-label">Key Publications</span>
+              <i class="fa-solid fa-chevron-down r-pubs-chevron"></i>
+            </button>
+            <div class="r-pubs-body">
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1007/s00484-024-02655-1" target="_blank" rel="noopener">A simple three-cylinder radiometer and low-speed anemometer to characterize human extreme heat exposure</a></p>
+              <p class="r-pub-meta">Rykaczewski, K., Joshi, A., Viswanathan, S. H., Guddanti, S. S., Sadeghi, K., et al. · International Journal of Biometeorology, 68(6), 1081–1092 · 2024</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1007/s00484-024-02655-1" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('A simple three-cylinder radiometer and low-speed anemometer to characterize human extreme heat exposure','Rykaczewski, K., Joshi, A., Viswanathan, S. H., Guddanti, S. S., Sadeghi, K., et al.','International Journal of Biometeorology, 68(6), 1081-1092 (2024)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1007/s00484-024-02838-w" target="_blank" rel="noopener">Advanced human heat exposure sensing using two cylinder anemometer and radiometer: introducing CARla</a></p>
+              <p class="r-pub-meta">Rykaczewski, K., Joshi, A., Viswanathan, S. H., Parkerson, E., Gupta, M., Park, M., et al. · International Journal of Biometeorology, 69(4), 835–848 · 2025</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1007/s00484-024-02838-w" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Advanced human heat exposure sensing using two cylinder anemometer and radiometer: introducing CARla','Rykaczewski, K., Joshi, A., Viswanathan, S. H., Parkerson, E., Gupta, M., Park, M., et al.','International Journal of Biometeorology, 69(4), 835-848 (2025)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.scitotenv.2024.171525" target="_blank" rel="noopener">Characterization of human extreme heat exposure using an outdoor thermal manikin</a></p>
+              <p class="r-pub-meta">Joshi, A., Viswanathan, S. H., Jaiswal, A. K., Sadeghi, K., Bartels, L., Jain, R. M., et al. · Science of the Total Environment, 923, 171525 · 2024</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.scitotenv.2024.171525" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Characterization of human extreme heat exposure using an outdoor thermal manikin','Joshi, A., Viswanathan, S. H., Jaiswal, A. K., Sadeghi, K., Bartels, L., Jain, R. M., et al.','Science of the Total Environment, 923, 171525 (2024)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.buildenv.2024.112934" target="_blank" rel="noopener">Resolving shortwave and longwave irradiation distributions across the human body in outdoor built environments</a></p>
+              <p class="r-pub-meta">Sadeghi, K., Viswanathan, S. H., Joshi, A., Bartels, L., Wereski, S., Jose, C. T., et al. · Building and Environment, 277, 112934 · 2025</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.buildenv.2024.112934" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Resolving shortwave and longwave irradiation distributions across the human body in outdoor built environments','Sadeghi, K., Viswanathan, S. H., Joshi, A., Bartels, L., Wereski, S., Jose, C. T., et al.','Building and Environment, 277, 112934 (2025)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1371/journal.pone.0318842" target="_blank" rel="noopener">Impact of human body shape on free convection heat transfer</a></p>
+              <p class="r-pub-meta">Viswanathan, S. H., Joshi, A., Bartels, L., Sadeghi, K., Vanos, J. K., Rykaczewski, K. · PLOS ONE, 20(2), e0318842 · 2025</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1371/journal.pone.0318842" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Impact of human body shape on free convection heat transfer','Viswanathan, S. H., Joshi, A., Bartels, L., Sadeghi, K., Vanos, J. K., Rykaczewski, K.','PLOS ONE, 20(2), e0318842 (2025)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.isci.2024.110254" target="_blank" rel="noopener">Simultaneous imaging of multi-pore sweat dynamics and evaporation rate measurement using wind tunnel ventilated capsule with infrared window</a></p>
+              <p class="r-pub-meta">Jaiswal, A. K., Jose, C. T., Ramesh, R., Nanani, V. K., Sadeghi, K., Joshi, A., et al. · iScience, 27(7) · 2024</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.isci.2024.110254" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Simultaneous imaging of multi-pore sweat dynamics and evaporation rate measurement using wind tunnel ventilated capsule with infrared window','Jaiswal, A. K., Jose, C. T., Ramesh, R., Nanani, V. K., Sadeghi, K., Joshi, A., et al.','iScience, 27(7) (2024)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1098/rsif.2025.0407" target="_blank" rel="noopener">A micro-to-macroscale and multi-method investigation of human sweating dynamics</a></p>
+              <p class="r-pub-meta">Jose, C. T., Joshi, A., Viswanathan, S. H., Nash, S. K., Sadeghi, K., Kavouras, S. A., et al. · Journal of the Royal Society Interface, 22(228), 20250407 · 2025</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1098/rsif.2025.0407" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('A micro-to-macroscale and multi-method investigation of human sweating dynamics','Jose, C. T., Joshi, A., Viswanathan, S. H., Nash, S. K., Sadeghi, K., Kavouras, S. A., et al.','Journal of the Royal Society Interface, 22(228), 20250407 (2025)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title">Turbulence of airflow matters in human thermophysiological response in the heat</p>
+              <p class="r-pub-meta">Abdullah, M., Viswanathan, S. H., Jose, C. T., Vanos, J., Middel, A., Joshi, A., et al. · Temperature · 2026</p>
+              <p class="r-pub-prep">In Review</p>
+              <div class="r-pub-links">
+                <button class="pub-link pub-link-req" onclick="reqFullText('Turbulence of airflow matters in human thermophysiological response in the heat','Abdullah, M., Viswanathan, S. H., Jose, C. T., Vanos, J., Middel, A., Joshi, A., et al.','Temperature (2026)')">Request Full Text</button>
+              </div>
+            </div>
+
+          </div>
+            </div>
+        </div>
+
+        <div class="r-card">
+          <div class="r-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+          <h3 class="r-title">Heat Mitigation Strategies</h3>
+          <img src="images/research/Heat mitigation.png" alt="Heat mitigation strategies and interventions" class="r-fig">
+          <p class="r-desc">Quantitative assessment of heat mitigation strategies and urban design interventions using thermoregulation modeling to evaluate their effectiveness at reducing physiological heat strain. Work spans reflective road surfaces evaluated at major international sporting events and shade structures for unsheltered urban populations, directly informing evidence-based public health and infrastructure guidelines.</p>
+          <div class="r-pubs">
+            <button class="r-pubs-toggle" onclick="togglePubs(this)" aria-expanded="false">
+              <span class="r-pubs-label">Key Publications</span>
+              <i class="fa-solid fa-chevron-down r-pubs-chevron"></i>
+            </button>
+            <div class="r-pubs-body">
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1007/s00484-025-02851-7" target="_blank" rel="noopener">Impact of tent shade on heat exposures and simulated heat strain for people experiencing homelessness</a></p>
+              <p class="r-pub-meta">Karanja, J., Vanos, J., Joshi, A., Penner, S., Guzman, G. E., Connor, D. S., et al. · International Journal of Biometeorology, 69(11), 2841–2854 · 2025</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1007/s00484-025-02851-7" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Impact of tent shade on heat exposures and simulated heat strain for people experiencing homelessness','Karanja, J., Vanos, J., Joshi, A., Penner, S., Guzman, G. E., Connor, D. S., et al.','International Journal of Biometeorology, 69(11), 2841-2854 (2025)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1007/s42978-023-00256-z" target="_blank" rel="noopener">Impact of reflective roadways on simulated heat strain at the Tokyo, Paris and Los Angeles Olympics</a></p>
+              <p class="r-pub-meta">Vanos, J. K., Joshi, A., Guzman-Echavarria, G., Rykaczewski, K., Hosokawa, Y. · Journal of Science in Sport and Exercise, 6(3), 288–302 · 2024</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1007/s42978-023-00256-z" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Impact of reflective roadways on simulated heat strain at the Tokyo, Paris and Los Angeles Olympics','Vanos, J. K., Joshi, A., Guzman-Echavarria, G., Rykaczewski, K., Hosokawa, Y.','Journal of Science in Sport and Exercise, 6(3), 288-302 (2024)')">Request Full Text</button>
+              </div>
+            </div>
+
+            <div class="r-pub-item">
+              <p class="r-pub-title">Age-Dependent Effectiveness of Indoor Personal Cooling Strategies during a Compound Extreme Heat and Power Outage Event in Phoenix, Arizona</p>
+              <p class="r-pub-meta">Joshi, A., et al.</p>
+              <p class="r-pub-prep">In Preparation</p>
+            </div>
+
+          </div>
+            </div>
         </div>
 
         <div class="r-card">
           <div class="r-icon"><i class="fa-solid fa-shirt"></i></div>
           <h3 class="r-title">Clothing &amp; PPE Heat Transfer</h3>
-          <p class="r-desc">Analytical and computational characterization of heat and mass transport through textile and protective equipment — wet conduction, evaporative cooling, garment microclimate — validated with thermal manikins to optimize firefighter gloves, exosuits, and occupational workwear.</p>
-        </div>
+          <img src="images/research/clothing heat transfer.png" alt="Clothing and PPE heat transfer research" class="r-fig">
+          <p class="r-desc">Workers in military, firefighting, and industrial occupations face a compounded heat burden: their protective clothing creates a microclimate that traps heat and restricts evaporative cooling precisely when the body needs to dissipate it most. This work develops analytical and computational models of heat and mass transfer through clothing, examining dry conduction, moisture-driven phase change, and wet fabric conduction, as well as how human movement drives ventilation and convection through the garment-skin interface. Experimental validation spans firefighter gloves, lower-back exosuits, and occupational workwear, generating the material-level parameters that feed thermoregulation models for realistic occupational heat strain prediction.</p>
+          <div class="r-pubs">
+            <button class="r-pubs-toggle" onclick="togglePubs(this)" aria-expanded="false">
+              <span class="r-pubs-label">Key Publications</span>
+              <i class="fa-solid fa-chevron-down r-pubs-chevron"></i>
+            </button>
+            <div class="r-pubs-body">
 
-        <div class="r-card">
-          <div class="r-icon"><i class="fa-solid fa-gauge-high"></i></div>
-          <h3 class="r-title">Real-Time Sensing &amp; Early Warning</h3>
-          <p class="r-desc">Mobile instrumentation platforms that combine environmental sensing with physiological modeling to produce person-specific, real-time heat strain estimates — translating computational predictions into deployable tools for occupational health and clinical decision support.</p>
-        </div>
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.ijthermalsci.2019.05.005" target="_blank" rel="noopener">Analytical clothing model for sensible heat transfer considering spatial heterogeneity</a></p>
+              <p class="r-pub-meta">Joshi, A., Psikuta, A., Bueno, M. A., Annaheim, S., Rossi, R. M. · International Journal of Thermal Sciences, 145, 105949 · 2019</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.ijthermalsci.2019.05.005" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Analytical clothing model for sensible heat transfer considering spatial heterogeneity','Joshi, A., Psikuta, A., Bueno, M. A., Annaheim, S., Rossi, R. M.','International Journal of Thermal Sciences, 145, 105949 (2019)')">Request Full Text</button>
+              </div>
+            </div>
 
-        <div class="r-card">
-          <div class="r-icon"><i class="fa-solid fa-temperature-half"></i></div>
-          <h3 class="r-title">Thermal Manikin Experimentation</h3>
-          <p class="r-desc">Experimental characterization of convective, radiative, and evaporative heat exchange under realistic conditions — outdoor solar radiation, turbulence, walking motion, and body morphology — generating validated coefficients for computational models.</p>
-        </div>
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.ijthermalsci.2021.106965" target="_blank" rel="noopener">Effect of movement on convection and ventilation in a skin-clothing-environment system</a></p>
+              <p class="r-pub-meta">Joshi, A., Psikuta, A., Bueno, M. A., Annaheim, S., Rossi, R. M. · International Journal of Thermal Sciences, 166, 106965 · 2021</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.ijthermalsci.2021.106965" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Effect of movement on convection and ventilation in a skin-clothing-environment system','Joshi, A., Psikuta, A., Bueno, M. A., Annaheim, S., Rossi, R. M.','International Journal of Thermal Sciences, 166, 106965 (2021)')">Request Full Text</button>
+              </div>
+            </div>
 
-        <div class="r-card">
-          <div class="r-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-          <h3 class="r-title">Heat Mitigation &amp; Intervention</h3>
-          <p class="r-desc">Quantitative evaluation of cooling interventions across physiologically distinct populations. Research directly informs evidence-based guidelines for heat casualty prevention in military, industrial, and clinical settings.</p>
-        </div>
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.buildenv.2022.109786" target="_blank" rel="noopener">Modelling of heat and mass transfer in clothing considering evaporation, condensation, and wet conduction</a></p>
+              <p class="r-pub-meta">Joshi, A., Psikuta, A., Annaheim, S., Rossi, R. M. · Building and Environment, 228, 109786 · 2023</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.buildenv.2022.109786" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Modelling of heat and mass transfer in clothing considering evaporation, condensation, and wet conduction with case study','Joshi, A., Psikuta, A., Annaheim, S., Rossi, R. M.','Building and Environment, 228, 109786 (2023)')">Request Full Text</button>
+              </div>
+            </div>
 
-        <div class="r-card">
-          <div class="r-icon"><i class="fa-solid fa-baby"></i></div>
-          <h3 class="r-title">Vulnerable Population Modeling</h3>
-          <p class="r-desc">Extending thermoregulation modeling to populations with distinct physiology — elderly individuals, fetal thermal environments — to characterize elevated heat risk and support targeted public health policy for extreme heat events.</p>
-        </div>
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.ergon.2023.103517" target="_blank" rel="noopener">Evaluation of thermal properties and thermoregulatory impacts of lower back exosuit using thermal manikin</a></p>
+              <p class="r-pub-meta">Joshi, A., Bartels, L., Viswanathan, S. H., Martinez, D. M., Sadeghi, K., Jaiswal, A. K., et al. · International Journal of Industrial Ergonomics, 98, 103517 · 2023</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.ergon.2023.103517" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Evaluation of thermal properties and thermoregulatory impacts of lower back exosuit using thermal manikin','Joshi, A., Bartels, L., Viswanathan, S. H., Martinez, D. M., Sadeghi, K., Jaiswal, A. K., et al.','International Journal of Industrial Ergonomics, 98, 103517 (2023)')">Request Full Text</button>
+              </div>
+            </div>
 
-      </div>
+            <div class="r-pub-item">
+              <p class="r-pub-title"><a href="https://doi.org/10.1016/j.heliyon.2023.e23596" target="_blank" rel="noopener">Analysis of glove local microclimate properties for various glove types and fits using 3D scanning method</a></p>
+              <p class="r-pub-meta">Joshi, A., Li, R., Wu, Y., Zhang, M., Song, G. · Heliyon, 10(1) · 2024</p>
+              <div class="r-pub-links">
+                <a class="pub-link pub-link-doi" href="https://doi.org/10.1016/j.heliyon.2023.e23596" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> DOI</a>
+                <button class="pub-link pub-link-req" onclick="reqFullText('Analysis of glove local microclimate properties for various glove types and fits using 3D scanning method','Joshi, A., Li, R., Wu, Y., Zhang, M., Song, G.','Heliyon, 10(1) (2024)')">Request Full Text</button>
+              </div>
+            </div>
+
+          </div>
+            </div>
+        </div>
+    </div>
     </div>
 
 
@@ -1041,17 +1357,26 @@
 
     <!-- ─── CONFERENCE ─────────────────────── -->
     <div id="conference" class="panel">
-      <p class="panel-label">Conference Presentations</p>
+      <p class="panel-label">Selected Conference Presentations</p>
 
       <!-- 2025 -->
       <div class="pub-year-group">
         <p class="pub-year-label">2025</p>
         <div class="pub-entry">
-          <span class="pub-num">12</span>
+          <span class="pub-num">8</span>
           <div>
-            <p class="pub-title">Tent Shades: Heat Relief or Added Strain for People Experiencing Homelessness?</p>
-            <p class="pub-authors"><span class="me">A Joshi</span>, J Karanja, J Vanos, O Jay, A Middel, KL Gronlund, D Hondula</p>
-            <p class="pub-venue">12th International Conference on Urban Climate (ICUC12) · 2025</p>
+            <p class="pub-title">Quantifying turbulent convective heat transfer using an outdoor thermal manikin</p>
+            <p class="pub-authors"><span class="me">A Joshi</span>, SH Viswanathan, CT Jose, G Pathikonda, K Rykaczewski</p>
+            <p class="conf-venue">13th International Manikin &amp; Modelling Meeting (I3M) · October 2025</p>
+            <span class="conf-type">Oral</span>
+          </div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-num">7</span>
+          <div>
+            <p class="pub-title">Thermoregulation Models for Assessing Heat Strain in Extreme Conditions</p>
+            <p class="pub-authors"><span class="me">A Joshi</span>, K Rykaczewski</p>
+            <p class="conf-venue">16th Conference on Environment and Health · New Orleans, Louisiana, USA · January 2025</p>
             <span class="conf-type">Oral</span>
           </div>
         </div>
@@ -1061,39 +1386,12 @@
       <div class="pub-year-group">
         <p class="pub-year-label">2024</p>
         <div class="pub-entry">
-          <span class="pub-num">11</span>
+          <span class="pub-num">6</span>
           <div>
-            <p class="pub-title">Measuring turbulence intensity near the skin surface to determine its effects on heat transfer from the human body</p>
-            <p class="pub-authors">M Parkerson, R Gupta, <span class="me">A Joshi</span>, K Rykaczewski</p>
-            <p class="pub-venue">APS Division of Fluid Dynamics · 2024</p>
-            <span class="conf-type">Contributed Talk</span>
-          </div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-num">10</span>
-          <div>
-            <p class="pub-title">Free convection around human bodies with different body shapes: numerical simulations and manikin experiments</p>
-            <p class="pub-authors">S Viswanathan, <span class="me">A Joshi</span></p>
-            <p class="pub-venue">APS Division of Fluid Dynamics · 2024</p>
-            <span class="conf-type">Contributed Talk</span>
-          </div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-num">9</span>
-          <div>
-            <p class="pub-title">Bottom-up view of sweat droplet emergence and evaporation dynamics</p>
-            <p class="pub-authors">K Rykaczewski, A Jaiswal, J Jose, Z Sadeghi, <span class="me">A Joshi</span></p>
-            <p class="pub-venue">APS Division of Fluid Dynamics · 2024</p>
-            <span class="conf-type">Contributed Talk</span>
-          </div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-num">8</span>
-          <div>
-            <p class="pub-title">Forced convection from the human body: insights from scale modeling and manikin experiments</p>
-            <p class="pub-authors"><span class="me">A Joshi</span>, S Viswanathan, A Jaiswal, K Rykaczewski</p>
-            <p class="pub-venue">APS Division of Fluid Dynamics · 2024</p>
-            <span class="conf-type">Contributed Talk</span>
+            <p class="pub-title">Forced convection from the human body in turbulent outdoor flows</p>
+            <p class="pub-authors"><span class="me">A Joshi</span>, S Viswanathan, A Jaiswal, K Sadeghi, L Bartels, G Pathikonda, K Rykaczewski</p>
+            <p class="conf-venue">APS Division of Fluid Dynamics Meeting · November 2024</p>
+            <span class="conf-type">Oral</span>
           </div>
         </div>
       </div>
@@ -1102,34 +1400,25 @@
       <div class="pub-year-group">
         <p class="pub-year-label">2023</p>
         <div class="pub-entry">
-          <span class="pub-num">7</span>
+          <span class="pub-num">5</span>
           <div>
-            <p class="pub-title">A comprehensive clothing model to simulate heat transfer in skin-clothing-environment system</p>
-            <p class="pub-authors"><span class="me">A Joshi</span>, X Wang</p>
-            <p class="pub-venue">23rd International Congress of Biometeorology · 2023</p>
-            <span class="conf-type">Oral</span>
-          </div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-num">6</span>
-          <div>
-            <p class="pub-title">Evaluation of thermal properties and thermoregulatory impacts of lower back exosuit using thermal manikin</p>
-            <p class="pub-authors"><span class="me">A Joshi</span>, K Rykaczewski</p>
-            <p class="pub-venue">Ergonomics Society Annual Conference · UK · 2023</p>
+            <p class="pub-title">Predicting human thermal response using 3D thermoregulation model</p>
+            <p class="pub-authors"><span class="me">A Joshi</span>, F Wang</p>
+            <p class="conf-venue">International Congress of Biometeorology · Tempe, Arizona, USA · May 2023</p>
             <span class="conf-type">Oral</span>
           </div>
         </div>
       </div>
 
-      <!-- 2022 -->
+      <!-- 2021 -->
       <div class="pub-year-group">
-        <p class="pub-year-label">2022</p>
+        <p class="pub-year-label">2021</p>
         <div class="pub-entry">
-          <span class="pub-num">5</span>
+          <span class="pub-num">4</span>
           <div>
-            <p class="pub-title">3D thermoregulatory modeling for predicting thermophysiological responses in various thermal environments</p>
-            <p class="pub-authors"><span class="me">A Joshi</span>, X Wang</p>
-            <p class="pub-venue">International Conference on Environmental Ergonomics (ICEE) · 2022</p>
+            <p class="pub-title">A novel approach for determining glove area factors based on 3D scanning technology</p>
+            <p class="pub-authors">M Zhang, <span class="me">A Joshi</span>, R Li, Y Wu, G Song</p>
+            <p class="conf-venue">12th 3DBODY.TECH Conference &amp; Expo · October 2021</p>
             <span class="conf-type">Oral</span>
           </div>
         </div>
@@ -1139,20 +1428,11 @@
       <div class="pub-year-group">
         <p class="pub-year-label">2019</p>
         <div class="pub-entry">
-          <span class="pub-num">4</span>
-          <div>
-            <p class="pub-title">Heat and moisture transfer modeling in skin-clothing-environment system</p>
-            <p class="pub-authors"><span class="me">A Joshi</span>, X Wang</p>
-            <p class="pub-venue">Textile Bioengineering and Informatics Symposium (TBIS) · Manchester, UK · 2019</p>
-            <span class="conf-type">Oral</span>
-          </div>
-        </div>
-        <div class="pub-entry">
           <span class="pub-num">3</span>
           <div>
-            <p class="pub-title">CLO3D fashion design software for digital prototype of protective clothing</p>
-            <p class="pub-authors">A Psikuta, <span class="me">A Joshi</span>, R Rossi</p>
-            <p class="pub-venue">3D Body Scanning &amp; Processing Conference · 2019</p>
+            <p class="pub-title">Realistic clothing model for heat and moisture transport through human skin-clothing-environment system</p>
+            <p class="pub-authors"><span class="me">A Joshi</span>, A Psikuta, M-A Bueno, S Annaheim, R Rossi</p>
+            <p class="conf-venue">International Conference on Environmental Ergonomics (ICEE) · Amsterdam, The Netherlands · July 2019</p>
             <span class="conf-type">Oral</span>
           </div>
         </div>
@@ -1164,18 +1444,18 @@
         <div class="pub-entry">
           <span class="pub-num">2</span>
           <div>
-            <p class="pub-title">Analytical model for sensible heat transfer through clothing with spatial heterogeneity</p>
-            <p class="pub-authors"><span class="me">A Joshi</span>, X Wang</p>
-            <p class="pub-venue">International Conference on Applied Human Factors and Ergonomics (AHFE) · 2018</p>
-            <span class="conf-type">Poster</span>
+            <p class="pub-title">Analysis of heat transfer from human body and effect of clothing surface on heat transfer mechanism</p>
+            <p class="pub-authors"><span class="me">A Joshi</span>, A Psikuta, M-A Bueno, S Annaheim, R Rossi</p>
+            <p class="conf-venue">COMSOL Conference · Lausanne, Switzerland · October 2018</p>
+            <span class="conf-type">Oral</span>
           </div>
         </div>
         <div class="pub-entry">
           <span class="pub-num">1</span>
           <div>
-            <p class="pub-title">The distribution of air gap thickness in protective garments using 3D scanning and its effect on heat transfer</p>
-            <p class="pub-authors">A Mert, A Psikuta, <span class="me">A Joshi</span>, R Rossi</p>
-            <p class="pub-venue">3DBODY.TECH · 2018</p>
+            <p class="pub-title">Mathematical formulation of sensible heat transfer in the spatially heterogeneous skin-clothing-environment system</p>
+            <p class="pub-authors"><span class="me">A Joshi</span>, A Psikuta, M-A Bueno, S Annaheim, R Rossi</p>
+            <p class="conf-venue">12th International Manikin &amp; Modelling Meeting (12i3m) · St. Gallen, Switzerland · August 2018</p>
             <span class="conf-type">Oral</span>
           </div>
         </div>
@@ -1188,31 +1468,10 @@
     <div id="cv" class="panel">
       <p class="panel-label">Curriculum Vitae</p>
 
-      <p class="cv-intro">My CV covers peer-reviewed publications, grants, invited talks, conference presentations, and academic service in computational thermoregulation and thermal physiology.</p>
-
       <a class="cv-btn" href="files/pdf/Ankit_CV.pdf" download>
         <i class="fa-solid fa-file-arrow-down"></i> Download CV (PDF)
       </a>
-      <p class="cv-note">Last updated 2025 · <a href="mailto:ajoshi@bhsai.org">Request the latest version</a></p>
-
-      <div class="cv-stats">
-        <div class="cv-stat">
-          <div class="cv-stat-num">6+</div>
-          <div class="cv-stat-lbl">Publications</div>
-        </div>
-        <div class="cv-stat">
-          <div class="cv-stat-num">3</div>
-          <div class="cv-stat-lbl">Grants Authored</div>
-        </div>
-        <div class="cv-stat">
-          <div class="cv-stat-num">8+</div>
-          <div class="cv-stat-lbl">Years Research</div>
-        </div>
-        <div class="cv-stat">
-          <div class="cv-stat-num">4</div>
-          <div class="cv-stat-lbl">Countries</div>
-        </div>
-      </div>
+      <p class="cv-note">Last updated December 2025</p>
 
       <!-- World Map -->
       <p class="map-section-label">International Research Presence</p>
@@ -1230,7 +1489,11 @@
         </li>
         <li class="journey-item">
           <span class="journey-flag">🇨🇭</span>
-          <span class="journey-detail"><strong>Switzerland / France</strong> — Empa + ENSISA, PhD research (2017–2020)</span>
+          <span class="journey-detail"><strong>Switzerland</strong> — Empa, PhD research (2017–2020)</span>
+        </li>
+        <li class="journey-item">
+          <span class="journey-flag">🇫🇷</span>
+          <span class="journey-detail"><strong>France</strong> — ENSISA, PhD research (2017–2020)</span>
         </li>
         <li class="journey-item">
           <span class="journey-flag">🇺🇸</span>
@@ -1242,32 +1505,236 @@
 
     <!-- ─── NEWS ───────────────────────────── -->
     <div id="news" class="panel">
-      <p class="panel-label">News &amp; Updates</p>
+      <p class="panel-label">Updates</p>
 
       <div class="news-item">
         <div class="news-date">May 2025</div>
         <div>
-          <p class="news-title">Promoted to Research Scientist II at HJF/BHSAI</p>
-          <p class="news-body">Continuing work on 3D virtual human thermoregulation models and leading development of the first high-fidelity female thermoregulation model for the U.S. Army.</p>
+          <img src="images/news/2025_05_Farewell ASU.jpeg" alt="Farewell at Arizona State University" class="news-img">
+          <p class="news-title">Transitioned to HJF/BHSAI as Research Scientist</p>
+          <p class="news-body">Concluded postdoctoral research at Arizona State University (Rykaczewski Lab) and joined the Henry M. Jackson Foundation for the Advancement of Military Medicine, continuing work on individualized thermoregulation modeling for military health applications.</p>
         </div>
       </div>
 
       <div class="news-item">
         <div class="news-date">Feb 2023</div>
         <div>
-          <p class="news-title">Joined Arizona State University as Research Scientist</p>
-          <p class="news-body">Began multi-track research program spanning individualized thermoregulation modeling, real-time sensing instrumentation, and thermal manikin experimentation.</p>
+          <p class="news-title">Joined Arizona State University as Postdoctoral Research Scientist</p>
+          <p class="news-body">Joined Prof. Konrad Rykaczewski's lab at Arizona State University, initiating a multi-track research program spanning individualized thermoregulation modeling, field-deployable heat strain sensing, and thermal manikin experimentation for extreme heat applications.</p>
         </div>
       </div>
 
       <div class="news-item">
-        <div class="news-date">2024</div>
+        <div class="news-date">Sep 2021</div>
         <div>
-          <p class="news-title">Paper published in <em>Heliyon</em></p>
-          <p class="news-body">New study on glove microclimate characterization using 3D scanning published — providing validated area factors for computational hand thermoregulation models.</p>
+          <img src="images/news/2021_09_Iowa state joining.png" alt="Joining Iowa State University" class="news-img">
+          <p class="news-title">Joined Iowa State University as Postdoctoral Research Associate</p>
+          <p class="news-body">Began postdoctoral appointment at Iowa State University, extending research on clothing microclimate characterization to glove thermal properties and occupational cold and heat stress in protective equipment.</p>
         </div>
       </div>
 
+      <div class="news-item">
+        <div class="news-date">Aug 2019</div>
+        <div>
+          <img src="images/news/2019_PhD defense.jpeg" alt="PhD Defense" class="news-img">
+          <p class="news-title">PhD Awarded — University of Haute-Alsace / Empa</p>
+          <p class="news-body">Successfully defended doctoral dissertation on analytical and computational modeling of heat and mass transfer through clothing systems, conducted jointly at ENSISA (Mulhouse, France) and Empa – Swiss Federal Laboratories for Materials Science and Technology (St. Gallen, Switzerland).</p>
+        </div>
+      </div>
+
+      <div class="news-item">
+        <div class="news-date">Aug 2018</div>
+        <div>
+          <img src="images/news/2018_COMSOL Conference.jpeg" alt="COMSOL Conference 2018, Lausanne" class="news-img">
+          <p class="news-title">Presented at COMSOL Conference 2018, Lausanne</p>
+          <p class="news-body">Presented work on analytical and computational modeling of sensible heat transfer through clothing at the COMSOL Conference in Lausanne, Switzerland, demonstrating spatial heterogeneity in garment thermal resistance.</p>
+        </div>
+      </div>
+
+      <div class="news-item">
+        <div class="news-date">Sep 2017</div>
+        <div>
+          <img src="images/news/2017_Empa Joining.jpeg" alt="Joining Empa St. Gallen" class="news-img">
+          <p class="news-title">Joined Empa as PhD Researcher</p>
+          <p class="news-body">Joined the Laboratory for Biomimetic Membranes and Textiles at Empa – Swiss Federal Laboratories for Materials Science and Technology in St. Gallen, Switzerland, initiating doctoral research on heat and mass transfer through protective clothing systems.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PRESS / MEDIA
+    ══════════════════════════════════════════ -->
+    <div id="press" class="panel" data-panel="press">
+      <p class="panel-label">Media &amp; Awards</p>
+
+      <p class="press-intro">My research on human thermoregulation, heat strain measurement, and thermal manikin experimentation has been covered by <strong>20 outlets</strong> across <strong>11 countries</strong>, including video broadcasts, international print media, and science publications.</p>
+
+      <div class="timeline">
+
+        <article class="tl-entry">
+          <div class="tl-year">2024</div>
+          <div class="tl-body">
+            <p class="tl-role">ASU Global Future Lab — Futurecast Vol. 6</p>
+            <p class="tl-inst">🇺🇸 USA &nbsp;·&nbsp; Magazine feature</p>
+            <ul class="press-outlets">
+              <li class="press-outlet-row">
+                <span class="press-badge badge-cited">Magazine</span>
+                <a class="press-link" href="https://issuu.com/asuoked/docs/gfl_2024_future_cast_vol6" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="tl-entry">
+          <div class="tl-year">May<br>2024</div>
+          <div class="tl-body">
+            <p class="tl-role">ASU News — New Technologies to Monitor &amp; Mitigate Heat</p>
+            <p class="tl-inst">🇺🇸 USA &nbsp;·&nbsp; Institutional coverage</p>
+            <ul class="press-outlets">
+              <li class="press-outlet-row">
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://news.asu.edu/20240531-environment-and-sustainability-asu-scientists-use-new-technologies-monitor-mitigate-heat" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="tl-entry">
+          <div class="tl-year">Jul<br>2023</div>
+          <div class="tl-body">
+            <p class="tl-role">International follow-up coverage</p>
+            <p class="tl-inst">France · USA · Taiwan · Indonesia &nbsp;·&nbsp; 4 outlets</p>
+            <ul class="press-outlets">
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Le Monde</span>
+                <span class="press-country">🇫🇷 France</span>
+                <span class="press-badge badge-name">Name in text</span>
+                <a class="press-link" href="https://www.lemonde.fr/en/m-le-mag/article/2023/07/20/in-phoenix-andi-the-robot-assesses-the-impact-of-heat-waves-on-the-human-body_6059828_117.html" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">NY1</span>
+                <span class="press-country">🇺🇸 USA</span>
+                <span class="press-badge badge-photo">In photo caption</span>
+                <a class="press-link" href="https://ny1.com/nyc/all-boroughs/ap-top-news/2023/07/10/how-extreme-heat-takes-a-toll-on-the-mind-and-body-according-to-experts" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Taipei Times</span>
+                <span class="press-country">🇹🇼 Taiwan</span>
+                <span class="press-badge badge-photo">In photo</span>
+                <a class="press-link" href="https://www.taipeitimes.com/News/world/archives/2023/07/23/2003803627" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Jakarta Post</span>
+                <span class="press-country">🇮🇩 Indonesia</span>
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://www.thejakartapost.com/culture/2023/07/22/a-sweaty-robot-may-help-humans-understand-impact-of-soaring-heat.html" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="tl-entry">
+          <div class="tl-year">Jun<br>2023</div>
+          <div class="tl-body">
+            <p class="tl-role">ANDI launch — International media wave</p>
+            <p class="tl-inst">USA · UK · Europe · Pakistan · Turkey · International &nbsp;·&nbsp; 15 outlets</p>
+            <ul class="press-outlets">
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Reuters</span>
+                <span class="press-country">🌍 International</span>
+                <span class="press-badge badge-video">In video</span>
+                <a class="press-link" href="https://www.youtube.com/watch?v=Sb_CM6JWAf4" target="_blank" rel="noopener">Watch ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">AFP News Agency</span>
+                <span class="press-country">🌍 International</span>
+                <span class="press-badge badge-video">In video</span>
+                <a class="press-link" href="https://www.youtube.com/watch?v=UJ5PViuVwRg" target="_blank" rel="noopener">Watch ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">AZ Family / 3TV</span>
+                <span class="press-country">🇺🇸 USA</span>
+                <span class="press-badge badge-video">In video</span>
+                <a class="press-link" href="https://www.azfamily.com/video/2023/06/07/meet-asus-new-research-tool-andi-thermal-manikin/" target="_blank" rel="noopener">Watch ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Daily Mail</span>
+                <span class="press-country">🇬🇧 UK</span>
+                <span class="press-badge badge-name">Name in text</span>
+                <a class="press-link" href="https://www.dailymail.co.uk/sciencetech/article-12174761/First-breathing-sweating-shivering-robot-created-indoor-outdoor-extreme-heat-wave-research.html" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Euronews</span>
+                <span class="press-country">🇪🇺 Europe</span>
+                <span class="press-badge badge-name">Name in text</span>
+                <a class="press-link" href="https://www.euronews.com/health/2023/06/13/meet-andi-the-sweating-thermal-dummy-aiding-research-to-solve-heat-related-illnesses" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">AP News</span>
+                <span class="press-country">🌍 International</span>
+                <span class="press-badge badge-photo">In photo caption</span>
+                <a class="press-link" href="https://apnews.com/article/southwest-heat-wave-stroke-illness-0bd904ebee575bdcbc622c722f3aac0b" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Nice News</span>
+                <span class="press-country">🇺🇸 USA</span>
+                <span class="press-badge badge-video">In video</span>
+                <a class="press-link" href="https://nicenews.com/innovation/breathing-sweating-walking-robot/" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">WBUR / NPR</span>
+                <span class="press-country">🇺🇸 USA</span>
+                <span class="press-badge badge-cited">Radio feature</span>
+                <a class="press-link" href="https://www.wbur.org/hereandnow/2023/06/27/robots-extreme-temperatures" target="_blank" rel="noopener">Listen ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">ASU News</span>
+                <span class="press-country">🇺🇸 USA</span>
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://news.asu.edu/20230525-solutions-meet-andi-worlds-first-outdoor-sweating-breathing-and-walking-manikin" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">The Independent</span>
+                <span class="press-country">🇬🇧 UK</span>
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://www.the-independent.com/tech/robot-sweat-shiver-heat-andi-b2353266.html" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Popular Science</span>
+                <span class="press-country">🇺🇸 USA</span>
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://www.popsci.com/technology/sweat-robot-heat-climate-change/" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Yahoo News</span>
+                <span class="press-country">🇬🇧 UK</span>
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://uk.news.yahoo.com/meet-andi-sweating-thermal-dummy-155430754.html" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Geo TV</span>
+                <span class="press-country">🇵🇰 Pakistan</span>
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://www.geo.tv/latest/492571-andi-can-feel-heat-scientists-bring-out-a-breathing-sweating-manikin" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Daily Sabah</span>
+                <span class="press-country">🇹🇷 Turkey</span>
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://www.dailysabah.com/life/science/scientists-turn-to-robots-that-sweat-to-understand-impact-of-heat" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+              <li class="press-outlet-row">
+                <span class="press-outlet-name">Interesting Engineering</span>
+                <span class="press-country">🌍 International</span>
+                <span class="press-badge badge-cited">Work cited</span>
+                <a class="press-link" href="https://interestingengineering.com/innovation/meet-andi-a-robot-that-can-breathe-sweat-and-walk" target="_blank" rel="noopener">Read ↗</a>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
     </div>
 
   </main>
@@ -1333,6 +1800,38 @@
   });
 }());
 
+/* ── Research card expand/collapse + Scholar link ── */
+document.querySelectorAll('.r-card').forEach(function(card) {
+  // Scholar link inside pubs body
+  var pubsBody = card.querySelector('.r-pubs-body');
+  if (pubsBody) {
+    var scholarLink = document.createElement('div');
+    scholarLink.className = 'r-scholar-link';
+    scholarLink.innerHTML = '<a href="https://scholar.google.com/citations?user=G84B1EQAAAAJ" target="_blank" rel="noopener"><i class="fa-solid fa-graduation-cap"></i> Full list on Google Scholar <i class="fa-solid fa-arrow-up-right-from-square"></i></a>';
+    pubsBody.appendChild(scholarLink);
+  }
+  // Fade + show more
+  var fade = document.createElement('div');
+  fade.className = 'r-card-fade';
+  card.appendChild(fade);
+  var btn = document.createElement('button');
+  btn.className = 'r-card-toggle';
+  btn.textContent = 'Show more ↓';
+  btn.onclick = function() {
+    var expanded = card.classList.toggle('r-expanded');
+    btn.textContent = expanded ? 'Show less ↑' : 'Show more ↓';
+  };
+  card.appendChild(btn);
+});
+
+/* ── Research pub toggle ───────────────────── */
+function togglePubs(btn) {
+  var body = btn.nextElementSibling;
+  var open = body.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', open);
+}
+
 /* ── Request Full Text ─────────────────────── */
 function reqFullText(title, authors, citation) {
   var subject = encodeURIComponent('Request Full Text: ' + title);
@@ -1374,7 +1873,8 @@ function initMap() {
   var pins = [
     { latlng: [22.3,  72.6],   title: 'Gujarat, India',            detail: 'Gujarat University — BE (2008–2012)' },
     { latlng: [51.4,   7.0],   title: 'Duisburg-Essen, Germany',   detail: 'University of Duisburg-Essen + SMS Group — MS (2013–2016)' },
-    { latlng: [47.4,   8.6],   title: 'Dübendorf, Switzerland',    detail: 'Empa / ENSISA — PhD Research (2017–2020)' },
+    { latlng: [47.4,   8.6],   title: 'Dübendorf, Switzerland',    detail: 'Empa — PhD Research (2017–2020)' },
+    { latlng: [47.75,  7.3],   title: 'Mulhouse, France',          detail: 'ENSISA — PhD Research (2017–2020)' },
     { latlng: [42.03, -93.6],  title: 'Ames, Iowa, USA',           detail: 'Iowa State University — Postdoctoral Fellow (2021–2023)' },
     { latlng: [33.42, -111.9], title: 'Tempe, Arizona, USA',       detail: 'Arizona State University — Research Scientist (2023–2025)' },
     { latlng: [39.42, -77.4],  title: 'Frederick, Maryland, USA',  detail: 'HJF / BHSAI — Research Scientist II (2025–Present)' }
