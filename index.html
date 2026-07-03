@@ -1,0 +1,638 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ankit Joshi — Computational Human Thermal Physiology</title>
+  <meta name="description" content="Research Scientist developing individualized thermoregulation models and early-warning systems for heat and cold injury.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* ─── Tokens ─── */
+    :root {
+      --bg:           #F5F6F8;
+      --text-1:       #14181D;
+      --text-2:       #525A64;
+      --text-3:       #868E98;
+      --hairline:     #E0E3E9;
+      --accent:       #1E4E8C;
+      --accent-hover: #163A6A;
+      --cold:         #2166AC;
+      --warm:         #C0492E;
+
+      --f-d: 'Spectral', Georgia, serif;
+      --f-b: 'IBM Plex Sans', system-ui, sans-serif;
+      --f-m: 'IBM Plex Mono', 'Courier New', monospace;
+
+      --sidebar-w: 230px;
+      --spine:     6rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:           #0F1216;
+        --text-1:       #E8ECF0;
+        --text-2:       #9AA3AD;
+        --text-3:       #6C7480;
+        --hairline:     #252B34;
+        --accent:       #5B9FE0;
+        --accent-hover: #7AB8EE;
+      }
+    }
+
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--f-b);
+      font-size: 1rem;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+    a { color: var(--accent); text-decoration: none; transition: color 0.15s; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ─── Layout ─── */
+    .layout {
+      display: flex;
+      align-items: flex-start;
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+      gap: 3rem;
+    }
+
+    /* ─── Sidebar ─── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: 2.5rem;
+      padding: 3.5rem 0 3rem;
+    }
+
+    .avatar {
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--hairline);
+      display: block;
+      margin-bottom: 1.1rem;
+    }
+
+    .s-name {
+      font-family: var(--f-d);
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      color: var(--text-1);
+      margin-bottom: 0.3rem;
+    }
+
+    .s-role {
+      font-family: var(--f-m);
+      font-size: 0.66rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      line-height: 1.5;
+      margin-bottom: 0.6rem;
+    }
+
+    .s-location {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--f-m);
+      font-size: 0.68rem;
+      letter-spacing: 0.03em;
+      color: var(--text-3);
+      margin-bottom: 1.5rem;
+    }
+    .s-location i { font-size: 0.7rem; color: var(--accent); }
+
+    .s-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--hairline);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ─── Sidebar links ─── */
+    .s-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .s-links li a {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text-2);
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .s-links li a:hover { color: var(--accent); text-decoration: none; }
+
+    .s-links li a .s-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-3);
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .s-links li a:hover .s-icon { color: var(--accent); }
+
+    .s-links li a .s-label {
+      font-family: var(--f-b);
+      font-size: 0.82rem;
+      line-height: 1;
+    }
+
+    /* ─── Main ─── */
+    main {
+      flex: 1;
+      min-width: 0;
+      padding: 3.5rem 0 5rem;
+    }
+
+    /* ─── Tabs ─── */
+    .tab-nav {
+      display: flex;
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 2.5rem;
+    }
+
+    .tab-btn {
+      font-family: var(--f-m);
+      font-size: 0.73rem;
+      font-weight: 400;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #868E98;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.7rem 1.2rem 0.6rem;
+      cursor: pointer;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    @media (prefers-color-scheme: dark) {
+      .tab-btn { color: #6C7480; }
+      .tab-btn:hover { color: #9AA3AD; }
+      .tab-btn.active { color: #5B9FE0; border-bottom-color: #5B9FE0; }
+    }
+    .tab-btn:hover { color: #525A64; }
+    .tab-btn.active { color: #1E4E8C; border-bottom-color: #1E4E8C; }
+
+    /* ─── Panels ─── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ─── About ─── */
+    .statement {
+      font-family: var(--f-d);
+      font-size: 1.07rem;
+      line-height: 1.7;
+      color: var(--text-1);
+      max-width: 58ch;
+      margin-bottom: 2.5rem;
+    }
+    .statement p + p { margin-top: 1em; }
+
+    .colorbar-wrap { max-width: 460px; }
+    .colorbar {
+      height: 5px;
+      border-radius: 3px;
+      background: linear-gradient(to right, #2166AC 0%, #74ADD1 22%, #D1E5F0 40%, #F7F7F7 50%, #FDDBC7 60%, #D6604D 78%, #C0492E 100%);
+      margin-bottom: 0.5rem;
+    }
+    .colorbar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--f-m);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .lbl-cold { color: var(--cold); opacity: 0.85; }
+    .lbl-hot  { color: var(--warm); opacity: 0.9; }
+
+    /* ─── Timeline (Experience) ─── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: var(--spine);
+      top: 0.4rem;
+      bottom: 0;
+      width: 1px;
+      background: var(--hairline);
+    }
+
+    .tl-entry {
+      display: grid;
+      grid-template-columns: var(--spine) 1fr;
+      gap: 0 1.75rem;
+      padding-bottom: 2.75rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .tl-entry.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .tl-entry, .edu-entry { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    .tl-year {
+      font-family: var(--f-m);
+      font-size: 0.67rem;
+      letter-spacing: 0.04em;
+      color: var(--text-3);
+      text-align: right;
+      padding-top: 0.22rem;
+      line-height: 1.5;
+    }
+
+    .tl-body { position: relative; }
+    .tl-body::before {
+      content: '';
+      position: absolute;
+      left: calc(-1.75rem - 3.5px);
+      top: 0.46rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .tl-role { font-size: 0.97rem; font-weight: 500; color: var(--text-1); line-height: 1.35; margin-bottom: 0.15rem; }
+    .tl-inst { font-family: var(--f-m); font-size: 0.67rem; letter-spacing: 0.03em; color: var(--text-3); line-height: 1.55; margin-bottom: 0.8rem; }
+    .tl-inst a { color: var(--text-3); }
+    .tl-inst a:hover { color: var(--accent); text-decoration: none; }
+    .tl-desc { font-size: 0.92rem; color: var(--text-2); max-width: 54ch; }
+
+    .tl-sub { list-style: none; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.65rem; }
+    .tl-sub li { display: grid; grid-template-columns: 1.6ch 1fr; gap: 0 0.6rem; font-size: 0.92rem; color: var(--text-2); max-width: 54ch; }
+    .tl-mk { font-family: var(--f-m); font-size: 0.68rem; color: var(--text-3); padding-top: 0.14rem; }
+
+    /* ─── Education ─── */
+    .edu-list { display: flex; flex-direction: column; }
+
+    .edu-entry {
+      display: grid;
+      grid-template-columns: var(--spine) 1fr;
+      gap: 0 1.75rem;
+      padding-bottom: 2.25rem;
+      position: relative;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .edu-entry.visible { opacity: 1; transform: none; }
+
+    .edu-entry::before {
+      content: '';
+      position: absolute;
+      left: var(--spine);
+      top: 0.4rem;
+      bottom: 0;
+      width: 1px;
+      background: var(--hairline);
+    }
+    .edu-entry:last-child::before { display: none; }
+
+    .edu-year { font-family: var(--f-m); font-size: 0.67rem; letter-spacing: 0.04em; color: var(--text-3); text-align: right; padding-top: 0.22rem; line-height: 1.5; }
+
+    .edu-body { position: relative; }
+    .edu-body::before {
+      content: '';
+      position: absolute;
+      left: calc(-1.75rem - 3.5px);
+      top: 0.46rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .edu-degree { font-size: 0.97rem; font-weight: 500; color: var(--text-1); line-height: 1.35; margin-bottom: 0.1rem; }
+    .edu-field { font-family: var(--f-m); font-size: 0.67rem; letter-spacing: 0.04em; color: var(--accent); margin-bottom: 0.1rem; }
+    .edu-inst { font-family: var(--f-m); font-size: 0.67rem; letter-spacing: 0.03em; color: var(--text-3); margin-bottom: 0.5rem; }
+
+    .edu-thesis {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      font-style: italic;
+      max-width: 52ch;
+    }
+    .edu-thesis a {
+      font-style: normal;
+      font-family: var(--f-m);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-left: 0.5rem;
+      white-space: nowrap;
+    }
+
+    /* ─── Footer ─── */
+    footer { border-top: 1px solid var(--hairline); }
+    .footer-inner {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .f-name, .f-email { font-family: var(--f-m); font-size: 0.7rem; letter-spacing: 0.05em; color: var(--text-3); }
+    .f-email a { color: var(--text-3); }
+    .f-email a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ─── Mobile ─── */
+    @media (max-width: 640px) {
+      .layout { flex-direction: column; padding: 0 1.25rem; gap: 0; }
+      .sidebar { width: 100%; position: static; padding: 2rem 0 1.25rem; border-bottom: 1px solid var(--hairline); }
+      .avatar { width: 80px; height: 80px; float: left; margin-right: 1rem; margin-bottom: 0.5rem; }
+      .s-name { font-size: 1.1rem; }
+      main { padding: 2rem 0 3rem; }
+      :root { --spine: 4.5rem; }
+    }
+
+    /* ─── Print ─── */
+    @media print {
+      body { background: white; color: black; font-size: 10.5pt; }
+      .tab-nav { display: none; }
+      .panel { display: block !important; margin-bottom: 2rem; }
+      .tl-entry, .edu-entry { opacity: 1 !important; transform: none !important; break-inside: avoid; }
+      .timeline::before, .tl-body::before, .edu-body::before, .edu-entry::before { display: none; }
+      .colorbar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main" class="sr-only">Skip to main content</a>
+
+  <div class="layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar" aria-label="Profile">
+      <img src="images/Ankit.png" alt="Photo of Ankit Joshi" class="avatar">
+      <h1 class="s-name">Ankit Joshi</h1>
+      <p class="s-role">Research Scientist II</p>
+      <p class="s-location">
+        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+        Maryland, USA
+      </p>
+      <div class="s-divider"></div>
+      <ul class="s-links" aria-label="Contact and profiles">
+        <li>
+          <a href="mailto:ajoshi@bhsai.org">
+            <span class="s-icon"><i class="fa-regular fa-envelope" aria-hidden="true"></i></span>
+            <span class="s-label">ajoshi@bhsai.org</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://scholar.google.com/citations?user=G84B1EQAAAAJ&hl=en" target="_blank" rel="noopener">
+            <span class="s-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>
+            <span class="s-label">Google Scholar</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.researchgate.net/profile/Ankit-Joshi-6" target="_blank" rel="noopener">
+            <span class="s-icon"><i class="fa-brands fa-researchgate" aria-hidden="true"></i></span>
+            <span class="s-label">ResearchGate</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://orcid.org/0000-0002-5399-1069" target="_blank" rel="noopener">
+            <span class="s-icon"><i class="fa-brands fa-orcid" aria-hidden="true"></i></span>
+            <span class="s-label">ORCID</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/joshi-ankit" target="_blank" rel="noopener">
+            <span class="s-icon"><i class="fa-brands fa-github" aria-hidden="true"></i></span>
+            <span class="s-label">GitHub</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/joshivank/" target="_blank" rel="noopener">
+            <span class="s-icon"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></span>
+            <span class="s-label">LinkedIn</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- ── Main ── -->
+    <main id="main">
+
+      <nav class="tab-nav" aria-label="Page sections">
+        <button class="tab-btn active" data-tab="about" aria-selected="true" role="tab">About</button>
+        <button class="tab-btn" data-tab="experience" aria-selected="false" role="tab">Experience</button>
+        <button class="tab-btn" data-tab="education" aria-selected="false" role="tab">Education</button>
+      </nav>
+
+      <!-- About -->
+      <div id="about" class="panel active" role="tabpanel">
+        <div class="statement">
+          <p>My aim is to enable precise forecasting of thermal injury, so that it is predicted and prevented rather than treated after it occurs. More people are exposed to extreme environments today than at any point in recorded history, yet thermal risk is still assessed using population averages and fixed environmental thresholds that do not account for individual physiological variability. To close this gap, I work to establish individualized thermoregulation modeling as a discipline that predicts risk at the level of the person rather than the population.</p>
+          <p>My models span the full landscape of the field — from high-fidelity 3D virtual humans that resolve heat transfer at the organ level to reduced-order models efficient enough for real-time prediction — and across the human lifespan from the young and healthy to the elderly and even the fetus. By pairing this range with real-time sensing and early warning, I am building toward a future in which every individual, in any environment, can know their own thermal limits before those limits are crossed.</p>
+        </div>
+        <div class="colorbar-wrap" aria-hidden="true">
+          <div class="colorbar"></div>
+          <div class="colorbar-labels">
+            <span class="lbl-cold">Cold Stress</span>
+            <span class="lbl-hot">Heat Stress</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div id="experience" class="panel" role="tabpanel">
+        <div class="timeline" role="list">
+
+          <article class="tl-entry" role="listitem">
+            <div class="tl-year">2025&ndash;<br>Present</div>
+            <div class="tl-body">
+              <p class="tl-role">Research Scientist II</p>
+              <p class="tl-inst">
+                <a href="https://www.hjf.org/" target="_blank" rel="noopener">Henry M. Jackson Foundation for the Advancement of Military Medicine (HJF)</a>
+                &thinsp;/&thinsp;
+                <a href="https://bhsai.org/" target="_blank" rel="noopener">BHSAI</a>,
+                U.S. Army Medical Research and Development Command &middot; Frederick, MD
+              </p>
+              <div class="tl-desc">
+                <p>Lead developer of anatomically detailed 3D virtual human models that simulate heat and cold stress at the organ level, enabling quantitative assessment of physiological strain and adverse health outcomes in military personnel and beyond. Currently leading development of the first high-fidelity female thermoregulation model to improve heat strain and injury risk prediction across sex-specific physiological variability.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-entry" role="listitem">
+            <div class="tl-year">2023&ndash;<br>2025</div>
+            <div class="tl-body">
+              <p class="tl-role">Research Scientist</p>
+              <p class="tl-inst">
+                <a href="https://semte.engineering.asu.edu/" target="_blank" rel="noopener">School for Engineering of Matter, Transport &amp; Energy</a>,
+                Arizona State University (ASU) &middot; Tempe, AZ
+              </p>
+              <div class="tl-desc">
+                <p>Research advanced three interconnected areas essential to understanding and predicting how the human body responds to thermal extremes.</p>
+                <ul class="tl-sub">
+                  <li>
+                    <span class="tl-mk">a</span>
+                    <span><strong>Individualized thermoregulation modeling</strong> — extending bioheat models to distinct physiological groups including young healthy adults, the elderly, and the fetus; evaluating heat mitigation strategies such as fan cooling, water dousing, and cold-water immersion.</span>
+                  </li>
+                  <li>
+                    <span class="tl-mk">b</span>
+                    <span><strong>Real-time environmental and physiological sensing</strong> — developing mobile instrumentation coupling thermal microclimate characterization to thermoregulation models for person-specific heat strain estimates in the field.</span>
+                  </li>
+                  <li>
+                    <span class="tl-mk">c</span>
+                    <span><strong>Experimental characterization of human heat and mass transfer</strong> — using thermal manikins to measure convective and radiative exchange under realistic outdoor conditions, including turbulence and body morphology effects.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-entry" role="listitem">
+            <div class="tl-year">2021&ndash;<br>2023</div>
+            <div class="tl-body">
+              <p class="tl-role">Postdoctoral Fellow</p>
+              <p class="tl-inst">Iowa State University &middot; Ames, IA</p>
+              <div class="tl-desc">
+                <p>Developed 3D hand thermoregulation models for cold weather injury prevention and computational tools for designing protective equipment (firefighter gloves). Co-authored a successful NIOSH grant ($731,250) and two NSF/NIH proposals targeting cold strain in occupational settings.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-entry" role="listitem">
+            <div class="tl-year">2017&ndash;<br>2020</div>
+            <div class="tl-body">
+              <p class="tl-role">PhD Researcher</p>
+              <p class="tl-inst">
+                <a href="https://www.empa.ch/" target="_blank" rel="noopener">Empa — Swiss Federal Laboratories for Materials Science and Technology</a>,
+                Switzerland
+              </p>
+              <div class="tl-desc">
+                <p>Developed a comprehensive model for heat and mass transfer through clothing to enhance thermal comfort and protection, validated against thermal manikin experiments. Published 3 peer-reviewed articles and presented at 3+ international conferences.</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div id="education" class="panel" role="tabpanel">
+        <div class="edu-list" role="list">
+
+          <div class="edu-entry" role="listitem">
+            <div class="edu-year">2017&ndash;<br>2019</div>
+            <div class="edu-body">
+              <p class="edu-degree">Doctor of Philosophy (PhD)</p>
+              <p class="edu-field">Mechanical Engineering</p>
+              <p class="edu-inst">École Nationale Supérieure d'Ingénieurs Sud Alsace (ENSISA) / Université de Haute-Alsace, France &nbsp;&middot;&nbsp; Research at Empa, Switzerland</p>
+              <p class="edu-thesis">
+                <em>Comprehensive model for heat and moisture transport in skin-clothing-environment system</em>
+                <a href="https://theses.hal.science/tel-03606520" target="_blank" rel="noopener">
+                  <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> View thesis
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div class="edu-entry" role="listitem">
+            <div class="edu-year">2013&ndash;<br>2016</div>
+            <div class="edu-body">
+              <p class="edu-degree">Master of Science (MS)</p>
+              <p class="edu-field">Computational Mechanics</p>
+              <p class="edu-inst">University of Duisburg-Essen, Germany &nbsp;&middot;&nbsp; Thesis work at SMS Group GmbH, Düsseldorf</p>
+              <p class="edu-thesis">
+                <em>Large Eddy Simulation of supersonic oxygen injector for the Electric Arc Furnace</em>
+              </p>
+            </div>
+          </div>
+
+          <div class="edu-entry" role="listitem">
+            <div class="edu-year">2008&ndash;<br>2012</div>
+            <div class="edu-body">
+              <p class="edu-degree">Bachelor of Engineering (BE)</p>
+              <p class="edu-field">Mechanical Engineering</p>
+              <p class="edu-inst">Gujarat University, India</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="f-name">Ankit Joshi</span>
+      <span class="f-email"><a href="mailto:ajoshi@bhsai.org">ajoshi@bhsai.org</a></span>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Tabs ── */
+    (function () {
+      var btns   = document.querySelectorAll('.tab-btn');
+      var panels = document.querySelectorAll('.panel');
+      btns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          btns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+          panels.forEach(function (p) { p.classList.remove('active'); });
+          this.classList.add('active');
+          this.setAttribute('aria-selected','true');
+          document.getElementById(this.dataset.tab).classList.add('active');
+          triggerVisible();
+        }.bind(btn));
+      });
+    }());
+
+    /* ── Scroll fade-up ── */
+    function triggerVisible() {
+      var items = document.querySelectorAll('.tl-entry:not(.visible), .edu-entry:not(.visible)');
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.tl-entry, .edu-entry').forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (records) {
+        records.forEach(function (r) {
+          if (r.isIntersecting) { r.target.classList.add('visible'); io.unobserve(r.target); }
+        });
+      }, { threshold: 0.08 });
+      items.forEach(function (el) { io.observe(el); });
+    }
+    triggerVisible();
+  </script>
+</body>
+</html>
