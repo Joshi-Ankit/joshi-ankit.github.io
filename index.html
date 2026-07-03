@@ -575,6 +575,17 @@
     .news-title { font-size:.93rem; font-weight:500; color:var(--text-1); margin-bottom:.2rem; line-height:1.4; }
     .news-body { font-size:.85rem; color:var(--text-2); max-width:58ch; line-height:1.7; }
     .news-img { width:100%; max-width:480px; border-radius:6px; margin:.5rem 0 .65rem; display:block; border:1px solid var(--hairline); }
+    /* Slideshow */
+    .slideshow { position:relative; max-width:480px; margin:.5rem 0 .65rem; }
+    .slideshow-track { display:flex; overflow:hidden; border-radius:6px; border:1px solid var(--hairline); }
+    .slideshow-track img { width:100%; flex-shrink:0; object-fit:cover; display:block; }
+    .slide-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.38); color:#fff; border:none; border-radius:50%; width:28px; height:28px; font-size:.85rem; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s; z-index:2; }
+    .slide-btn:hover { background:rgba(0,0,0,.6); }
+    .slide-prev { left:7px; }
+    .slide-next { right:7px; }
+    .slide-dots { display:flex; gap:5px; justify-content:center; margin-top:.35rem; }
+    .slide-dot { width:6px; height:6px; border-radius:50%; background:var(--hairline); border:none; cursor:pointer; padding:0; transition:background .15s; }
+    .slide-dot.active { background:var(--accent); }
 
     /* ═══════════════════════════════════════════
        PRESS / IN THE MEDIA
@@ -1536,7 +1547,18 @@
       <div class="news-item">
         <div class="news-date">Aug 2019</div>
         <div>
-          <img src="images/news/2019_PhD defense.jpeg" alt="PhD Defense" class="news-img">
+          <div class="slideshow" id="phd-slideshow">
+            <div class="slideshow-track" id="phd-track">
+              <img src="images/news/2019_PhD defense.jpeg" alt="PhD Defense">
+              <img src="images/news/2019_PhD defense2.jpeg" alt="PhD Defense">
+            </div>
+            <button class="slide-btn slide-prev" onclick="slide('phd',-1)" aria-label="Previous">&#8249;</button>
+            <button class="slide-btn slide-next" onclick="slide('phd',1)" aria-label="Next">&#8250;</button>
+            <div class="slide-dots" id="phd-dots">
+              <button class="slide-dot active" onclick="slideTo('phd',0)"></button>
+              <button class="slide-dot" onclick="slideTo('phd',1)"></button>
+            </div>
+          </div>
           <p class="news-title">PhD Awarded — University of Haute-Alsace / Empa</p>
           <p class="news-body">Successfully defended doctoral dissertation on analytical and computational modeling of heat and mass transfer through clothing systems, conducted jointly at ENSISA (Mulhouse, France) and Empa – Swiss Federal Laboratories for Materials Science and Technology (St. Gallen, Switzerland).</p>
         </div>
@@ -1886,6 +1908,35 @@ function initMap() {
       .bindPopup('<strong>' + p.title + '</strong><br><em>' + p.detail + '</em>');
   });
 }
+
+/* Slideshow */
+var _slides = {};
+function _initSlide(id) {
+  if (!_slides[id]) _slides[id] = { idx: 0 };
+}
+function slide(id, dir) {
+  _initSlide(id);
+  var imgs = document.getElementById(id+'-track').children;
+  _slides[id].idx = (_slides[id].idx + dir + imgs.length) % imgs.length;
+  _applySlide(id);
+}
+function slideTo(id, n) {
+  _initSlide(id);
+  _slides[id].idx = n;
+  _applySlide(id);
+}
+function _applySlide(id) {
+  var idx = _slides[id].idx;
+  var track = document.getElementById(id+'-track');
+  track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  var dots = document.getElementById(id+'-dots').children;
+  for (var i=0; i<dots.length; i++) dots[i].classList.toggle('active', i===idx);
+}
+// init track style
+document.addEventListener('DOMContentLoaded', function() {
+  var t = document.getElementById('phd-track');
+  if (t) { t.style.transition = 'transform .35s ease'; t.style.display = 'flex'; }
+});
 </script>
 
 </body>
