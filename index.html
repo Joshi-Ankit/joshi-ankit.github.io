@@ -434,6 +434,13 @@
       color:var(--text-3); padding-bottom:.5rem;
       border-bottom:1px solid var(--hairline); margin-bottom:.85rem;
     }
+    .pub-section-label {
+      font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:var(--accent); font-weight:600;
+      border-bottom:2px solid var(--accent-lt); padding-bottom:.4rem;
+      margin-bottom:1.1rem;
+    }
     .pub-item {
       display:grid; grid-template-columns:2rem 1fr;
       gap:0 .75rem; padding:.85rem 0;
@@ -731,7 +738,7 @@
           Ankit Joshi <i class="fa-solid fa-chevron-down chevron"></i>
         </button>
         <button class="nav-primary-btn" data-panel="research">Research</button>
-        <button class="nav-primary-btn" data-panel="publications">Papers</button>
+        <button class="nav-primary-btn" data-panel="publications">Publications</button>
         <button class="nav-primary-btn" data-panel="conference">Conference</button>
         <button class="nav-primary-btn" data-panel="cv">CV</button>
         <button class="nav-primary-btn" data-panel="news">Updates</button>
@@ -1114,7 +1121,7 @@
 
     <!-- ─── PUBLICATIONS ───────────────────── -->
     <div id="publications" class="panel">
-      <p class="panel-label">Peer-Reviewed Journal Articles · Last synced from Google Scholar July 2025</p>
+      <p class="panel-label">Publications</p>
 
       <div class="pub-year-group">
         <p class="pub-year-label">2026</p>
@@ -1360,9 +1367,70 @@
         </div>
       </div>
 
+      <p class="pub-section-label">Peer-Reviewed Journal Articles · Last synced from Google Scholar July 2025</p>
       <a class="scholar-cta" href="https://scholar.google.com/citations?user=G84B1EQAAAAJ" target="_blank" rel="noopener">
         <i class="fa-solid fa-graduation-cap"></i> Full list on Google Scholar <i class="fa-solid fa-arrow-right"></i>
       </a>
+
+      <!-- ─── BOOK CHAPTERS ─── -->
+      <p class="pub-section-label" style="margin-top:2.5rem;">Book Chapters</p>
+      <div class="pub-year-group">
+        <p class="pub-year-label">2025</p>
+
+        <div class="pub-item">
+          <span class="pub-num">B2</span>
+          <div>
+            <p class="pub-title">Respiratory protective device: Protection mechanisms, filtration efficiency, and associated modeling and predictions</p>
+            <p class="pub-authors"><span class="me">Joshi, A.</span>, Zhang, M.</p>
+            <span class="pub-venue">Designing Advanced Respiratory Protective Devices for Pandemics, pp. 115–135 · Elsevier · 2025</span>
+            <div class="pub-links">
+              <a class="pub-link pub-link-doi" href="https://www.sciencedirect.com/science/article/pii/B9780323953160000116" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Chapter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <span class="pub-num">B1</span>
+          <div>
+            <p class="pub-title">Purpose and performance of respiratory protective devices in a pandemic</p>
+            <p class="pub-authors">Li, R., <span class="me">Joshi, A.</span>, Wu, Y., Zhang, M.</p>
+            <span class="pub-venue">Designing Advanced Respiratory Protective Devices for Pandemics, pp. 17–56 · Elsevier · 2025</span>
+            <div class="pub-links">
+              <a class="pub-link pub-link-doi" href="https://www.sciencedirect.com/science/article/pii/B9780323953160000037" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Chapter</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <span class="pub-num">B3</span>
+          <div>
+            <p class="pub-title">Future perspective and outlook: Incorporation of advanced technology</p>
+            <p class="pub-authors">Gao, H., Li, R., <span class="me">Joshi, A.</span></p>
+            <span class="pub-venue">Designing Advanced Respiratory Protective Devices for Pandemics, pp. 289–313 · Elsevier · 2025</span>
+            <div class="pub-links">
+              <a class="pub-link pub-link-doi" href="https://www.sciencedirect.com/science/article/pii/B9780323953160000013" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Chapter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── PhD THESIS ─── -->
+      <p class="pub-section-label" style="margin-top:2.5rem;">PhD Thesis</p>
+      <div class="pub-year-group">
+        <p class="pub-year-label">2019</p>
+        <div class="pub-item">
+          <span class="pub-num">T1</span>
+          <div>
+            <p class="pub-title">Comprehensive model for heat and moisture transport in skin-clothing-environment system</p>
+            <p class="pub-authors"><span class="me">Joshi, A.</span></p>
+            <span class="pub-venue">École Nationale Supérieure d'Ingénieurs Sud Alsace (ENSISA) / Université de Haute-Alsace, France · Research conducted at Empa, Switzerland · 2019</span>
+            <div class="pub-links">
+              <a class="pub-link pub-link-doi" href="https://theses.hal.science/tel-03606520" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Thesis</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
 
